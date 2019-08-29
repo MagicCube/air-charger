@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.env.osx": {
+    "PATH": "/Users/henry/.platformio/penv/bin:/Users/henry/.platformio/penv:/usr/local/opt/icu4c/sbin:/usr/local/opt/icu4c/bin:/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "PLATFORMIO_CALLER": "vscode"
+  }
+}
