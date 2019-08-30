@@ -8,4 +8,5 @@
 // non-BLE features.
 #define BLE_ENABLED
 
+// Comment the next line to disable debug mode.
 #define DEBUG
