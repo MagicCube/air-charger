@@ -3,6 +3,7 @@
 #include <EEPROM.h>
 
 #include "log.h"
+#include "../utils/format.h"
 
 void Settings::begin() {
   LOG_I("Loading settings from EEPROM...");
@@ -13,18 +14,7 @@ void Settings::begin() {
     for (int i = 0; i < 6; i++) {
       _clientAddress[i] = EEPROM.read(i + 1);
     }
-    char clientAddressStr[17 + 1];
-    sprintf(
-			clientAddressStr,
-			"%.2x:%.2x:%.2x:%.2x:%.2x:%.2x",
-			_clientAddress[0],
-			_clientAddress[1],
-			_clientAddress[2],
-			_clientAddress[3],
-			_clientAddress[4],
-			_clientAddress[5]
-		);
-    LOG_D("Saved client address was found: [%s]", clientAddressStr);
+    LOG_D("Saved client address was found: [%s]", formatBLEAddress(_clientAddress).c_str());
   } else {
     LOG_D("No previous setting wa found in EEPROM.");
     _hasClientAddress = false;
