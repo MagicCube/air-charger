@@ -13,9 +13,16 @@ void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
   Serial.begin(115200);
-  Serial.println("\n\n********************************************************************************");
+  Serial.println("\n");
+  Serial.println("          _         _____ _");
+  Serial.println("    /\\   (_)       / ____| |");
+  Serial.println("   /  \\   _ _ __  | |    | |__   __ _ _ __ __ _  ___ _ __ ");
+  Serial.println("  / /\\ \\ | | '__| | |    | '_ \\ / _` | '__/ _` |/ _ \\ '__|");
+  Serial.println(" / ____ \\| | |    | |____| | | | (_| | | | (_| |  __/ |");
+  Serial.println("/_/    \\_\\_|_|     \\_____|_| |_|\\__,_|_|  \\__, |\\___|_|");
+  Serial.println("                                          |___/\n");
   AirCharger.begin(DEVICE_NAME);
-  Serial.println("********************************************************************************\n\n");
+  Serial.println();
 }
 
 void loop() {
