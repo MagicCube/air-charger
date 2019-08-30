@@ -6,24 +6,31 @@
 #include "KeyboardReportMap.h"
 
 void BLEDiscoverable::begin() {
+  // Add encryption to built-in characteristics and descirptors.
+  LOG_I("Setting encryption level...");
+  BLEDevice::setEncryptionLevel(ESP_BLE_SEC_ENCRYPT);
+
+  LOG_I("Initializing BLE discoverable server...");
   _server = BLEDevice::createServer();
   _server->setCallbacks(this);
 
   // HID Decoy
+  LOG_I("Initializing HID device...");
   _hid = new BLEHIDDevice(_server);
 
   // Input / Output
+  LOG_I("Initializing HID service...");
   auto _inputCharacteristic = _hid->inputReport(1);
   _setAccessPermission(_inputCharacteristic);
   auto outputCharacteristic = _hid->outputReport(1);
   _setAccessPermission(outputCharacteristic);
 
   // Disable security.
+  LOG_D("Setting HID security...");
   BLESecurity *security = new BLESecurity();
   security->setCapability(ESP_IO_CAP_NONE);
 
-  // Add encryption to built-in characteristics and descirptors.
-  BLEDevice::setEncryptionLevel(ESP_BLE_SEC_ENCRYPT);
+  LOG_D("Setting HID permissions...");
   _setAccessPermission(_hid->deviceInfo(), 0x2a50);
   _hid->pnp(0x02, 0xe502, 0xa111, 0x0210);
   _setAccessPermission(_hid->hidService(), 0x2a4a);
@@ -32,33 +39,46 @@ void BLEDiscoverable::begin() {
   _setAccessPermission(_hid->hidService(), 0x2a4e);
   _setAccessPermission(_hid->batteryService(), 0x2a19);
 
-  // Set device info.
+  LOG_D("Setting device country and flags...");
   _hid->hidInfo(0x00, 0x01);
-  _hid->manufacturer(DEVICE_MANUFACTURER);
+
+  LOG_D("Setting battery level...");
   _hid->setBatteryLevel(100);
 
-  // Send HID report.
+  // Send HID report map.
+  LOG_D("Setting HID report map...");
   _hid->reportMap((uint8_t *)KEYBOARD_REPORT_MAP, sizeof(KEYBOARD_REPORT_MAP));
 
+  LOG_D("Starting HID service...");
   // Start HID service.
   _hid->startServices();
+  LOG_D("HID service has been <STARTED>.");
+  LOG_I("BLE discoverable server has been <INITIALIZED>.");
 }
 
 void BLEDiscoverable::startAdvertising() {
+  LOG_D("Starting BLE advertising...");
   BLEAdvertising *advertising = BLEDevice::getAdvertising();
   // Pretend to be an HID keyboard device.
   advertising->setAppearance(GENERIC_HID);
   advertising->addServiceUUID(_hid->hidService()->getUUID());
-  advertising->setScanResponse(true);
+  // advertising->setScanResponse(true);
   // Functions that help with iOS connections issue
-  advertising->setMinPreferred(0x06);
-  advertising->setMinPreferred(0x12);
+  // advertising->setMinPreferred(0x06);
+  // advertising->setMinPreferred(0x12);
   BLEDevice::startAdvertising();
   LOG_I("BLE advertising has been <STARTED>.");
   LOG_I("Search [%s] in your Bluetooth device list.", DEVICE_NAME);
 }
 
+void BLEDiscoverable::stopAdvertising() {
+  LOG_D("Stopping advertising...");
+  _server->getAdvertising()->stop();
+  LOG_I("BLE advertising has been <STOPPED>.");
+}
+
 void BLEDiscoverable::onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param) {
+  stopAdvertising();
   BLEAddress clientAddress = BLEAddress(param->connect.remote_bda);
   LOG_I("A new client has been connected [%s].", clientAddress.toString().c_str());
 }

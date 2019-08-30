@@ -12,6 +12,9 @@ public:
   // Starts BLE advertising.
   void startAdvertising();
 
+  // Stops BLE advertising.
+  void stopAdvertising();
+
   // Implements BLEServerCallbacks
   void onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param);
 
