@@ -6,17 +6,19 @@
 
 #ifdef BLE_ENABLED
 #include <BLEDevice.h>
-#include "BLEDiscoverable.h"
+#include "BLEParingServer.h"
 #endif
 
 class BLEPeripheralClass {
 public:
   // Initializes the `BLEPeripheral`.
   void begin(String deviceName);
+  void startParingMode();
 
 private:
+  String _deviceName;
   #ifdef BLE_ENABLED
-  BLEDiscoverable _discoverable;
+  BLEParingServer *_paringServer = nullptr;
   #endif
 };
 

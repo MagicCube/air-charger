@@ -4,9 +4,9 @@
 #include <BLEDevice.h>
 #include <BLEHIDDevice.h>
 
-class BLEDiscoverable : BLEServerCallbacks {
+class BLEParingServer : BLEServerCallbacks {
 public:
-  // Initializes the `BLEDiscoverable`.
+  // Initializes the `BLEParingServer`.
   void begin(String deviceName);
 
   // Starts BLE advertising.

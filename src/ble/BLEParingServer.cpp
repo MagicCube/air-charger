@@ -1,24 +1,17 @@
-#include "BLEDiscoverable.h"
+#include "BLEParingServer.h"
 
 #include "conf.h"
 #include "log.h"
 
 #include "../settings/Settings.h"
+#include "../utils/format.h"
 
 #include "KeyboardReportMap.h"
 
-void BLEDiscoverable::begin(String deviceName) {
-  LOG_I("Initializing BLE discoverable server...");
-
+void BLEParingServer::begin(String deviceName) {
   _deviceName = deviceName;
-  LOG_D("Initializing BLE device...");
-  BLEDevice::init(deviceName.c_str());
 
-  LOG_D("Setting encryption level...");
-  // Add encryption to built-in characteristics and descirptors.
-  BLEDevice::setEncryptionLevel(ESP_BLE_SEC_ENCRYPT);
-
-  LOG_D("Initializing BLE discoverable server...");
+  LOG_I("Initializing BLE paring server...");
   _server = BLEDevice::createServer();
   _server->setCallbacks(this);
 
@@ -61,12 +54,12 @@ void BLEDiscoverable::begin(String deviceName) {
   // Start HID service.
   _hid->startServices();
   LOG_D("HID service has been <STARTED>.");
-  LOG_I("BLE discoverable server has been <INITIALIZED>.");
+  LOG_I("BLE paring server has been <INITIALIZED>.");
 
   startAdvertising();
 }
 
-void BLEDiscoverable::startAdvertising() {
+void BLEParingServer::startAdvertising() {
   LOG_D("Starting BLE advertising...");
   BLEAdvertising *advertising = BLEDevice::getAdvertising();
   // Pretend to be an HID keyboard device.
@@ -82,25 +75,24 @@ void BLEDiscoverable::startAdvertising() {
   LOG_I("Waiting for paring with new device...");
 }
 
-void BLEDiscoverable::stopAdvertising() {
+void BLEParingServer::stopAdvertising() {
   LOG_D("Stopping advertising...");
   _server->getAdvertising()->stop();
   LOG_I("BLE advertising has been <STOPPED>.");
 }
 
-void BLEDiscoverable::onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param) {
-  BLEAddress clientAddress = BLEAddress(param->connect.remote_bda);
-  LOG_I("A new client [%s] has been paired.", clientAddress.toString().c_str());
+void BLEParingServer::onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param) {
+  LOG_I("A new client [%s] has been paired.", formatBLEAddress(param->connect.remote_bda).c_str());
   LOG_I("Saving paired client address...");
   AirChargerSettings.setClientAddress((uint8_t *)(param->connect.remote_bda));
   AirChargerSettings.save();
 }
 
-void BLEDiscoverable::onDisconnect(BLEServer *server) {
+void BLEParingServer::onDisconnect(BLEServer *server) {
 }
 
 
-void BLEDiscoverable::_setAccessPermission(BLECharacteristic *characteristic) {
+void BLEParingServer::_setAccessPermission(BLECharacteristic *characteristic) {
   characteristic->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED |
                                        ESP_GATT_PERM_WRITE_ENCRYPTED);
 
@@ -120,6 +112,6 @@ void BLEDiscoverable::_setAccessPermission(BLECharacteristic *characteristic) {
   }
 }
 
-void BLEDiscoverable::_setAccessPermission(BLEService *service, uint16_t uuid) {
+void BLEParingServer::_setAccessPermission(BLEService *service, uint16_t uuid) {
   _setAccessPermission(service->getCharacteristic(BLEUUID(uuid)));
 }
