@@ -22,7 +22,7 @@ void setup() {
   Serial.println("/_/    \\_\\_|_|     \\_____|_| |_|\\__,_|_|  \\__, |\\___|_|");
   Serial.println("                                          |___/\n");
   AirCharger.begin(DEVICE_NAME);
-  Serial.println();
+  Serial.println("********************************************************************************");
 }
 
 void loop() {
