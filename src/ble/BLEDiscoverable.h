@@ -7,7 +7,7 @@
 class BLEDiscoverable : BLEServerCallbacks {
 public:
   // Initializes the `BLEDiscoverable`.
-  void begin();
+  void begin(String deviceName);
 
   // Starts BLE advertising.
   void startAdvertising();
@@ -22,6 +22,7 @@ public:
   void onDisconnect(BLEServer *server);
 
 private:
+  String _deviceName;
   BLEServer *_server;
   BLEHIDDevice *_hid;
   void _setAccessPermission(BLECharacteristic *characteristic);

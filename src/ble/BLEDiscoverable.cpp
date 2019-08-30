@@ -3,23 +3,31 @@
 #include "conf.h"
 #include "log.h"
 
+#include "../settings/Settings.h"
+
 #include "KeyboardReportMap.h"
 
-void BLEDiscoverable::begin() {
+void BLEDiscoverable::begin(String deviceName) {
+  LOG_I("Initializing BLE discoverable server...");
+
+  _deviceName = deviceName;
+  LOG_D("Initializing BLE device...");
+  BLEDevice::init(deviceName.c_str());
+
+  LOG_D("Setting encryption level...");
   // Add encryption to built-in characteristics and descirptors.
-  LOG_I("Setting encryption level...");
   BLEDevice::setEncryptionLevel(ESP_BLE_SEC_ENCRYPT);
 
-  LOG_I("Initializing BLE discoverable server...");
+  LOG_D("Initializing BLE discoverable server...");
   _server = BLEDevice::createServer();
   _server->setCallbacks(this);
 
   // HID Decoy
-  LOG_I("Initializing HID device...");
+  LOG_D("Initializing HID device...");
   _hid = new BLEHIDDevice(_server);
 
   // Input / Output
-  LOG_I("Initializing HID service...");
+  LOG_D("Initializing HID service...");
   auto _inputCharacteristic = _hid->inputReport(1);
   _setAccessPermission(_inputCharacteristic);
   auto outputCharacteristic = _hid->outputReport(1);
@@ -54,6 +62,8 @@ void BLEDiscoverable::begin() {
   _hid->startServices();
   LOG_D("HID service has been <STARTED>.");
   LOG_I("BLE discoverable server has been <INITIALIZED>.");
+
+  startAdvertising();
 }
 
 void BLEDiscoverable::startAdvertising() {
@@ -68,7 +78,8 @@ void BLEDiscoverable::startAdvertising() {
   // advertising->setMinPreferred(0x12);
   BLEDevice::startAdvertising();
   LOG_I("BLE advertising has been <STARTED>.");
-  LOG_I("Search [%s] in your Bluetooth device list.", DEVICE_NAME);
+  LOG_I("Search [%s] in your Bluetooth device list.", _deviceName.c_str());
+  LOG_I("Waiting for paring with new device...");
 }
 
 void BLEDiscoverable::stopAdvertising() {
@@ -78,9 +89,11 @@ void BLEDiscoverable::stopAdvertising() {
 }
 
 void BLEDiscoverable::onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param) {
-  stopAdvertising();
   BLEAddress clientAddress = BLEAddress(param->connect.remote_bda);
-  LOG_I("A new client has been connected [%s].", clientAddress.toString().c_str());
+  LOG_I("A new client [%s] has been paired.", clientAddress.toString().c_str());
+  LOG_I("Saving paired client address...");
+  AirChargerSettings.setClientAddress((uint8_t *)(param->connect.remote_bda));
+  AirChargerSettings.save();
 }
 
 void BLEDiscoverable::onDisconnect(BLEServer *server) {
