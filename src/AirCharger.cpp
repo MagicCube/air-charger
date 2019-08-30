@@ -12,8 +12,10 @@ void AirChargerClass::begin(String deviceName) {
   BLEPeripheral.begin(deviceName);
   if (AirChargerSettings.hasClientAddress()) {
     LOG_I("Running in <SCANNING> mode.");
+    BLEPeripheral.startParingMode();
   } else {
     LOG_I("Running in <PAIRING> mode.");
+    BLEPeripheral.startParingMode();
   }
 }
 
