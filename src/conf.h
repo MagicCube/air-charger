@@ -7,3 +7,5 @@
 // This is very handy when you only want to debug OLED or other
 // non-BLE features.
 #define BLE_ENABLED
+
+#define DEBUG

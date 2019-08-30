@@ -25,6 +25,7 @@ void LOG_I(const string fmt_str, ...) {
 }
 
 void LOG_D(const string fmt_str, ...) {
+  #ifdef DEBUG
   Serial.print("[DBG] ");
   int final_n,
       n = ((int)fmt_str.size()) * 2; /* Reserve two times as much as the length of the fmt_str */
@@ -44,4 +45,5 @@ void LOG_D(const string fmt_str, ...) {
   }
 
   Serial.println(formatted.get());
+  #endif
 }
