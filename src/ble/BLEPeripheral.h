@@ -18,26 +18,41 @@ enum class BLEPeripheralState {
   IDLE,
   PARING,
   SCANNING,
-  READY_TO_CONNECT,
-  CONNECTING,
-  CONNECTED,
-  DISCONNECTED
+  REMOTE_DEVICE_READY_TO_CONNECT,
+  REMOTE_DEVICE_CONNECTING,
+  REMOTE_DEVICE_CONNECTED,
+  REMOTE_DEVICE_DISCONNECTED
 };
 
-class BLEPeripheralClass {
+class BLEPeripheralCallbacks {
+public:
+  virtual void onRemoteDeviceConnect() = 0;
+  virtual void onRemoteDeviceDisconnect() = 0;
+  virtual void onRemoteDeviceBatteryLevelChanged() = 0;
+};
+
+class BLEPeripheralClass : BLERemoteDeviceCallbacks {
 public:
   void begin(String deviceName);
 
   BLEPeripheralState state();
   BLERemoteDevice *getRemoteDevice();
+  void setCallbacks(BLEPeripheralCallbacks *callbacks);
 
   void startParingMode();
   void startScanningMode(ble_address_t addressLookingFor);
-  void connect(ble_address_t addressToBeConnected);
+  void connectRemoteDevice(ble_address_t remoteAddress);
+
+  // Implements `BLERemoteDeviceCallbacks`.
+  void onConnect();
+  void onDisconnect();
+  void onBatteryLevelChanged();
 
 private:
   String _deviceName;
   BLEPeripheralState _state = BLEPeripheralState::INITIALIZING;
+  BLEPeripheralCallbacks *_callbacks;
+
   #ifdef BLE_ENABLED
   BLEParingServer *_paringServer = nullptr;
   BLEScanner *_scanner = nullptr;

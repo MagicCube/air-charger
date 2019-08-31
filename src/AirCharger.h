@@ -6,7 +6,7 @@
 
 #include "ble/BLEPeripheral.h"
 
-class AirChargerClass {
+class AirChargerClass : BLEPeripheralCallbacks {
 public:
   // Initializes the `AirCharger` with given device name.
   void begin(String deviceName);
@@ -15,6 +15,12 @@ public:
   void update();
 
   void redraw();
+  void drawMessage(String message);
+
+  // Implements `BLEPeripheralCallbacks`.
+  void onRemoteDeviceConnect();
+  void onRemoteDeviceDisconnect();
+  void onRemoteDeviceBatteryLevelChanged();
 
 private:
   TFT_eSPI _display;
