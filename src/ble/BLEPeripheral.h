@@ -12,17 +12,23 @@
 
 enum class BLEPeripheralState {
   INITIALIZING,
+  IDLE,
   PARING,
   SCANNING,
+  READY_TO_CONNECT,
   CONNECTING,
-  CONNECTED
+  CONNECTED,
+  DISCONNECTED
 };
 
 class BLEPeripheralClass {
 public:
+  BLEPeripheralState state();
+
   void begin(String deviceName);
   void startParingMode();
-  void startScanningMode(uint8_t *addressLookingFor);
+  void startScanningMode(ble_address_t addressLookingFor);
+  void connect(ble_address_t addressToBeConnected);
 
 private:
   String _deviceName;
