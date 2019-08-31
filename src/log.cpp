@@ -2,6 +2,8 @@
 
 using namespace std;
 
+#include "conf.h"
+
 void LOG_I(const string fmt_str, ...) {
   Serial.print("[INF] ");
   int final_n,
