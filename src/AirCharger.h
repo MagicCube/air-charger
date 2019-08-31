@@ -4,7 +4,9 @@
 
 #include <TFT_eSPI.h>
 
+#include "timing/DateTime.h"
 #include "ble/BLEPeripheral.h"
+
 
 class AirChargerClass : BLEPeripheralCallbacks {
 public:
@@ -21,6 +23,7 @@ public:
   void onRemoteDeviceConnect();
   void onRemoteDeviceDisconnect();
   void onRemoteDeviceBatteryLevelChanged();
+  void onRemoteDeviceTime(DateTime time);
 
 private:
   TFT_eSPI _display;

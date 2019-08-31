@@ -50,7 +50,11 @@ void AirChargerClass::redraw() {
   _display.setTextFont(7);
   _display.setTextSize(1);
   _display.setTextDatum(BC_DATUM);
-  _display.drawString("22:24", TFT_WIDTH / 2, TFT_HEIGHT - 32);
+
+  DateTime dateTime(DateTime::now());
+  char dateStr[6];
+  sprintf(dateStr, "%.2d:%.2d", (dateTime.getHours() + TIME_ZONE_OFFSET / 60) % 24, dateTime.getMinutes());
+  _display.drawString(dateStr, TFT_WIDTH / 2, TFT_HEIGHT - 32);
 }
 
 void AirChargerClass::drawMessage(String message) {
@@ -72,6 +76,12 @@ void AirChargerClass::onRemoteDeviceDisconnect() {
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {
   redraw();
+}
+
+void AirChargerClass::onRemoteDeviceTime(DateTime time) {
+  LOG_I("Adjusting current system time [%d-%d-%d %2.d:%2.d:%2.d, %d]...", time.getFullYear(),
+        time.getMonth() + 1, time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(), time.gmtTime());
+  DateTime::configTime(time);
 }
 
 AirChargerClass AirCharger;

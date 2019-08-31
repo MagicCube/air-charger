@@ -11,6 +11,7 @@
 #include "./scanning/BLEScanner.h"
 #endif
 
+#include "../timing/DateTime.h"
 #include "ble_address_t.h"
 
 enum class BLEPeripheralState {
@@ -28,6 +29,7 @@ class BLEPeripheralCallbacks {
 public:
   virtual void onRemoteDeviceConnect() = 0;
   virtual void onRemoteDeviceDisconnect() = 0;
+  virtual void onRemoteDeviceTime(DateTime time) = 0;
   virtual void onRemoteDeviceBatteryLevelChanged() = 0;
 };
 
@@ -47,6 +49,7 @@ public:
   void onConnect();
   void onDisconnect();
   void onBatteryLevelChanged();
+  void onTime(DateTime time);
 
 private:
   String _deviceName;

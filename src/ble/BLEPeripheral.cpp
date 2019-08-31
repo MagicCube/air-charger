@@ -91,4 +91,10 @@ void BLEPeripheralClass::onBatteryLevelChanged() {
   }
 }
 
+void BLEPeripheralClass::onTime(DateTime time) {
+  if (_callbacks) {
+    _callbacks->onRemoteDeviceTime(time);
+  }
+}
+
 BLEPeripheralClass BLEPeripheral;
