@@ -3,6 +3,8 @@
 #include <Arduino.h>
 #include <BLEDevice.h>
 
+#include "../ble_address_t.h"
+
 class BLEScanner : BLEAdvertisedDeviceCallbacks {
 public:
   // Creates a new instance of `BLEScanner`.
@@ -11,16 +13,20 @@ public:
   // Initializes the `BLEScanner`.
   void begin();
 
-  // Starts BLE searching.
-  void startSearching(uint8_t *address);
+  // Search for device with specific address.
+  BLEAdvertisedDevice *search(ble_address_t address);
 
-  // Stops BLE searching.
-  void stopSearching();
+  // Starts BLE scanning.
+  BLEAdvertisedDevice *startScanning();
+
+  // Stops BLE scanning.
+  void stopScanning();
 
   // Override `BLEAdvertisedDeviceCallbacks`
   void onResult(BLEAdvertisedDevice advertisedDevice);
 
 private:
-  BLEScan *_scan;
   BLEAddress _searchingAddress;
+  BLEScan *_scan;
+  BLEAdvertisedDevice *_foundDevice;
 };

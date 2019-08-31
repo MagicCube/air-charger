@@ -2,14 +2,16 @@
 
 #include <Arduino.h>
 
+#include "../ble/ble_address_t.h"
+
 class Settings {
 public:
   // Initializes `AirChargerSettings`.
   void begin();
 
   bool hasClientAddress();
-  uint8_t* getClientAddress();
-  void setClientAddress(uint8_t *address);
+  ble_address_t getClientAddress();
+  void setClientAddress(ble_address_t address);
 
   void save();
 

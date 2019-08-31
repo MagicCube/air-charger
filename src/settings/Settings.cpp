@@ -25,11 +25,11 @@ bool Settings::hasClientAddress() {
   return _hasClientAddress;
 }
 
-uint8_t *Settings::getClientAddress() {
+ble_address_t Settings::getClientAddress() {
   return _clientAddress;
 }
 
-void Settings::setClientAddress(uint8_t *address) {
+void Settings::setClientAddress(ble_address_t address) {
   LOG_D("[EEPROM] sets client address.");
   _touch();
   for (int i = 0; i < 6; i++) {
