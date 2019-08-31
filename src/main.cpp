@@ -25,4 +25,5 @@ void setup() {
 }
 
 void loop() {
+  AirCharger.update();
 }

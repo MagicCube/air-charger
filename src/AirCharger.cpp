@@ -20,4 +20,10 @@ void AirChargerClass::begin(String deviceName) {
   LOG_I("================================================================================");
 }
 
+void AirChargerClass::update() {
+  if (BLEPeripheral.state() == BLEPeripheralState::READY_TO_CONNECT) {
+    BLEPeripheral.connect(AirChargerSettings.getClientAddress());
+  }
+}
+
 AirChargerClass AirCharger;

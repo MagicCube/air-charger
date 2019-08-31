@@ -9,6 +9,9 @@ public:
   // Initializes the `AirCharger` with given device name.
   void begin(String deviceName);
 
+  // Event loop.
+  void update();
+
 private:
   bool _isEmpty = false;
 };
