@@ -10,6 +10,8 @@
 #include "./scanning/BLEScanner.h"
 #endif
 
+#include "ble_address_t.h"
+
 enum class BLEPeripheralState {
   INITIALIZING,
   IDLE,

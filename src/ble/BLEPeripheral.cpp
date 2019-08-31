@@ -23,16 +23,19 @@ void BLEPeripheralClass::begin(String deviceName) {
 void BLEPeripheralClass::startParingMode() {
   LOG_I("Starting in <PARING> mode...");
   _state = BLEPeripheralState::PARING;
+  #ifdef BLE_ENABLED
   if (_paringServer == nullptr) {
     _paringServer = new BLEParingServer();
   }
   _paringServer->begin(_deviceName);
+  #endif
 }
 
 void BLEPeripheralClass::startScanningMode(ble_address_t addressSearchingFor) {
   LOG_I("Starting in <SCANNING> mode...");
   LOG_I("Searching for device [%s]...", formatBLEAddress(addressSearchingFor).c_str());
   _state = BLEPeripheralState::SCANNING;
+  #ifdef BLE_ENABLED
   if (_scanner == nullptr) {
     _scanner = new BLEScanner();
   }
@@ -44,11 +47,13 @@ void BLEPeripheralClass::startScanningMode(ble_address_t addressSearchingFor) {
   } else {
     _state = BLEPeripheralState::DISCONNECTED;
   }
+  #endif
 }
 
 void BLEPeripheralClass::connect(ble_address_t address) {
   LOG_I("Connecting to %s...", formatBLEAddress(address).c_str());
   _state = BLEPeripheralState::CONNECTING;
+  #ifdef BLE_ENABLED
   auto client = BLEDevice::createClient();
   client->connect(address);
   auto batteryService = client->getService("180f");
@@ -58,6 +63,7 @@ void BLEPeripheralClass::connect(ble_address_t address) {
       LOG_I("Battery level = %d", characteristic->readUInt8());
     }
   }
+  #endif
 }
 
 BLEPeripheralClass BLEPeripheral;
