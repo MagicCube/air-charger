@@ -4,7 +4,7 @@
 
 void BLEPeripheralClass::begin(String deviceName) {
   _deviceName = deviceName;
-  LOG_I("Initializing BLE Device [%s]...", deviceName.c_str());
+  LOG_I("Initializing BLE peripheral [%s]...", deviceName.c_str());
   #ifdef BLE_ENABLED
   LOG_D("Initializing BLE device...");
   BLEDevice::init(deviceName.c_str());
