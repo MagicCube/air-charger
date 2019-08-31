@@ -1,6 +1,5 @@
 #include "BLEParingServer.h"
 
-#include "conf.h"
 #include "log.h"
 
 #include "../../settings/Settings.h"
