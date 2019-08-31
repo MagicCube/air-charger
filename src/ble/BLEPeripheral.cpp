@@ -2,11 +2,6 @@
 
 #include "log.h"
 #include "../utils/format.h"
-
-BLEPeripheralState BLEPeripheralClass::state() {
-  return _state;
-}
-
 void BLEPeripheralClass::begin(String deviceName) {
   _deviceName = deviceName;
   LOG_I("Initializing BLE peripheral [%s]...", deviceName.c_str());
@@ -18,6 +13,14 @@ void BLEPeripheralClass::begin(String deviceName) {
   BLEDevice::setEncryptionLevel(ESP_BLE_SEC_ENCRYPT);
 #endif
   LOG_I("BLE peripheral has been <INITIALIZED>.");
+}
+
+BLEPeripheralState BLEPeripheralClass::state() {
+  return _state;
+}
+
+BLERemoteDevice *BLEPeripheralClass::getRemoteDevice() {
+  return _remoteDevice;
 }
 
 void BLEPeripheralClass::startParingMode() {
@@ -38,8 +41,8 @@ void BLEPeripheralClass::startScanningMode(ble_address_t addressSearchingFor) {
   #ifdef BLE_ENABLED
   if (_scanner == nullptr) {
     _scanner = new BLEScanner();
+    _scanner->begin();
   }
-  _scanner->begin();
   auto foundDevice = _scanner->search(addressSearchingFor);
   if (foundDevice) {
     LOG_I("<<< YES, WE FOUND IT >>>");
@@ -51,18 +54,14 @@ void BLEPeripheralClass::startScanningMode(ble_address_t addressSearchingFor) {
 }
 
 void BLEPeripheralClass::connect(ble_address_t address) {
-  LOG_I("Connecting to %s...", formatBLEAddress(address).c_str());
+  LOG_I("Try to connect to [%s]...", formatBLEAddress(address).c_str());
   _state = BLEPeripheralState::CONNECTING;
   #ifdef BLE_ENABLED
-  auto client = BLEDevice::createClient();
-  client->connect(address);
-  auto batteryService = client->getService("180f");
-  if (batteryService != nullptr) {
-    auto characteristic = batteryService->getCharacteristic("2a19");
-    if (characteristic != nullptr) {
-      LOG_I("Battery level = %d", characteristic->readUInt8());
-    }
+  if (_remoteDevice == nullptr) {
+    _remoteDevice = new BLERemoteDevice();
+    _remoteDevice->begin();
   }
+  _remoteDevice->connect(address);
   #endif
 }
 

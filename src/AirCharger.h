@@ -14,8 +14,10 @@ public:
   // Event loop.
   void update();
 
+  void redraw();
+
 private:
-  bool _isEmpty = false;
+  TFT_eSPI _display;
 };
 
 extern AirChargerClass AirCharger;

@@ -6,6 +6,7 @@
 
 #ifdef BLE_ENABLED
 #include <BLEDevice.h>
+#include "./connecting/BLERemoteDevice.h"
 #include "./paring/BLEParingServer.h"
 #include "./scanning/BLEScanner.h"
 #endif
@@ -25,9 +26,11 @@ enum class BLEPeripheralState {
 
 class BLEPeripheralClass {
 public:
-  BLEPeripheralState state();
-
   void begin(String deviceName);
+
+  BLEPeripheralState state();
+  BLERemoteDevice *getRemoteDevice();
+
   void startParingMode();
   void startScanningMode(ble_address_t addressLookingFor);
   void connect(ble_address_t addressToBeConnected);
@@ -38,6 +41,7 @@ private:
   #ifdef BLE_ENABLED
   BLEParingServer *_paringServer = nullptr;
   BLEScanner *_scanner = nullptr;
+  BLERemoteDevice *_remoteDevice = nullptr;
   #endif
 };
 
