@@ -22,11 +22,10 @@ public:
   // Stops BLE scanning.
   void stopScanning();
 
-  // Override `BLEAdvertisedDeviceCallbacks`
+  // Implements `BLEAdvertisedDeviceCallbacks`
   void onResult(BLEAdvertisedDevice advertisedDevice);
 
 private:
   BLEAddress _searchingAddress;
-  BLEScan *_scan;
   BLEAdvertisedDevice *_foundDevice;
 };
