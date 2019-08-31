@@ -6,7 +6,7 @@
 
 #ifdef BLE_ENABLED
 #include <BLEDevice.h>
-#include "BLEParingServer.h"
+#include "./paring/BLEParingServer.h"
 #endif
 
 class BLEPeripheralClass {

@@ -3,8 +3,8 @@
 #include "conf.h"
 #include "log.h"
 
-#include "../settings/Settings.h"
-#include "../utils/format.h"
+#include "../../settings/Settings.h"
+#include "../../utils/format.h"
 
 #include "KeyboardReportMap.h"
 
