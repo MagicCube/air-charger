@@ -15,8 +15,8 @@
 #define BATTERY_PADDING 5
 
 MainScene::MainScene()
-    : _clockFrame((TFT_WIDTH - 160) / 2, 50, 160, 52),
-      _batteryFrame((240 - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 125, 160, 60),
+    : _clockFrame((TFT_WIDTH - 160) / 2, 40, 160, 52),
+      _batteryFrame((240 - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128, 160, 60),
       _chargingIndicatorFrame(_batteryFrame.left - charging_indicator_width - 8,
                               _batteryFrame.top + 8, charging_indicator_width,
                               charging_indicator_height) {
