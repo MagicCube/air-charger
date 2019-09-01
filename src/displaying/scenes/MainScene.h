@@ -19,6 +19,9 @@ private:
   TFT_eSprite *_battery = nullptr;
   Rect _batteryFrame;
 
+  Rect _chargingIndicatorFrame;
+
   void _drawClock(TFT_eSPI *canvas);
   void _drawBattery(TFT_eSPI *canvas);
+  void _drawChargingIndicator(TFT_eSPI *canvas);
 };

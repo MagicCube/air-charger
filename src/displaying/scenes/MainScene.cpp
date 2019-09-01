@@ -3,7 +3,12 @@
 #include "log.h"
 
 #include "../../ble/BLEPeripheral.h"
+#include "../../charging/Charger.h"
 #include "../../utils/format.h"
+
+#include "../../resources/charging_indicator.h"
+
+#define TFT_GREY 0x4208
 
 #define BATTERY_HEAD_WIDTH 6
 #define BATTERY_ROUNDNESS 4
@@ -11,7 +16,10 @@
 
 MainScene::MainScene()
     : _clockFrame((TFT_WIDTH - 160) / 2, 50, 160, 52),
-      _batteryFrame((240 - 150) / 2 + BATTERY_HEAD_WIDTH / 2, 125, 160, 60) {
+      _batteryFrame((240 - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 125, 160, 60),
+      _chargingIndicatorFrame(_batteryFrame.left - charging_indicator_width - 8,
+                              _batteryFrame.top + 8, charging_indicator_width,
+                              charging_indicator_height) {
 }
 
 bool MainScene::update(bool forceRedraw) {
@@ -27,6 +35,7 @@ bool MainScene::update(bool forceRedraw) {
 void MainScene::redraw(TFT_eSPI *canvas) {
   _drawClock(canvas);
   _drawBattery(canvas);
+  _drawChargingIndicator(canvas);
   _lastRedraw = millis();
 }
 
@@ -69,7 +78,7 @@ void MainScene::_drawBattery(TFT_eSPI *canvas) {
   float batteryLevel = BLEPeripheral.getRemoteDevice()->batteryLevel();
   int batteryWidth = ((float)(_batteryFrame.width - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
                      (batteryLevel / 100);
-  auto batteryColor = TFT_DARKGREEN;
+  auto batteryColor = Charger.isCharging() ? TFT_DARKGREEN : TFT_GREY;
   if (batteryLevel <= 20) {
     batteryColor = TFT_ORANGE;
   } else if (batteryLevel <= 10) {
@@ -89,4 +98,15 @@ void MainScene::_drawBattery(TFT_eSPI *canvas) {
 
   _battery->pushSprite(_batteryFrame.left, _batteryFrame.top);
   _battery->deleteSprite();
+}
+
+void MainScene::_drawChargingIndicator(TFT_eSPI *canvas) {
+  if (Charger.isCharging()) {
+    canvas->drawXBitmap(_chargingIndicatorFrame.left, _chargingIndicatorFrame.top,
+                        charging_indicator_bits, _chargingIndicatorFrame.width,
+                        _chargingIndicatorFrame.height, TFT_WHITE);
+  } else {
+    canvas->fillRect(_chargingIndicatorFrame.left, _chargingIndicatorFrame.top,
+                     _chargingIndicatorFrame.width, _chargingIndicatorFrame.height, TFT_BLACK);
+  }
 }
