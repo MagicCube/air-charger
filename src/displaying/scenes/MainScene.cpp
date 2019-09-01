@@ -69,8 +69,7 @@ void MainScene::_drawBattery(TFT_eSPI *canvas) {
   float batteryLevel = BLEPeripheral.getRemoteDevice()->batteryLevel();
   int batteryWidth = ((float)(_batteryFrame.width - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
                      (batteryLevel / 100);
-  // auto batteryColor = TFT_DARKGREEN;
-  auto batteryColor = 0x4228; // grey
+  auto batteryColor = TFT_DARKGREEN;
   if (batteryLevel <= 20) {
     batteryColor = TFT_ORANGE;
   } else if (batteryLevel <= 10) {
