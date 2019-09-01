@@ -27,6 +27,7 @@ enum class BLEPeripheralState {
 
 class BLEPeripheralCallbacks {
 public:
+  virtual void onStateChanged() = 0;
   virtual void onRemoteDeviceConnect() = 0;
   virtual void onRemoteDeviceDisconnect() = 0;
   virtual void onRemoteDeviceTime(DateTime time) = 0;
@@ -38,6 +39,7 @@ public:
   void begin(String deviceName);
 
   BLEPeripheralState state();
+  void setState(BLEPeripheralState newState);
   BLERemoteDevice *getRemoteDevice();
   void setCallbacks(BLEPeripheralCallbacks *callbacks);
 
