@@ -9,6 +9,8 @@
 #include "AirCharger.h"
 
 void setup() {
+  Display.begin();
+
   // Disable brownout detector
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
@@ -25,5 +27,8 @@ void setup() {
 }
 
 void loop() {
-  AirCharger.update();
+  auto timeBudget = AirCharger.update();
+  if (timeBudget > 0) {
+    delay(timeBudget);
+  }
 }

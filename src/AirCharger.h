@@ -4,9 +4,10 @@
 
 #include <TFT_eSPI.h>
 
-#include "timing/DateTime.h"
+#include "settings/Settings.h"
 #include "ble/BLEPeripheral.h"
-
+#include "timing/DateTime.h"
+#include "displaying/Display.h"
 
 class AirChargerClass : BLEPeripheralCallbacks {
 public:
@@ -14,19 +15,18 @@ public:
   void begin(String deviceName);
 
   // Event loop.
-  void update();
-
-  void redraw();
-  void drawMessage(String message);
+  uint16_t update();
 
   // Implements `BLEPeripheralCallbacks`.
+  void onStateChanged();
   void onRemoteDeviceConnect();
   void onRemoteDeviceDisconnect();
   void onRemoteDeviceBatteryLevelChanged();
   void onRemoteDeviceTime(DateTime time);
 
 private:
-  TFT_eSPI _display;
+  unsigned long _lastUpdate = 0;
+  void _checkConnection();
 };
 
 extern AirChargerClass AirCharger;
