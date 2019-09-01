@@ -16,6 +16,7 @@ public:
 
   void update(bool forceRedraw = false);
   void clear();
+  void showSplash();
   void showMessage(String message);
 
 private:

@@ -5,13 +5,8 @@
 void DisplayClass::begin() {
   _tft.init();
   _tft.setRotation(1);
-  clear();
 
-  _tft.setTextColor(TFT_WHITE);
-  _tft.setFreeFont(&FreeSans18pt7b);
-  _tft.setTextSize(1);
-  _tft.setTextDatum(CC_DATUM);
-  _tft.drawString("AirCharger", TFT_WIDTH / 2, TFT_HEIGHT / 2);
+  showSplash();
 }
 
 TFT_eSPI DisplayClass::canvas() {
@@ -52,6 +47,15 @@ void DisplayClass::update(bool forceRedraw) {
 
 void DisplayClass::clear() {
   _tft.fillScreen(TFT_BLACK);
+}
+
+void DisplayClass::showSplash() {
+  clear();
+  _tft.setTextColor(TFT_WHITE);
+  _tft.setFreeFont(&FreeSans18pt7b);
+  _tft.setTextSize(1);
+  _tft.setTextDatum(CC_DATUM);
+  _tft.drawString("AirCharger", TFT_WIDTH / 2, TFT_HEIGHT / 2);
 }
 
 void DisplayClass::showMessage(String message) {

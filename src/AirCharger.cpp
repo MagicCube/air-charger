@@ -56,6 +56,7 @@ void AirChargerClass::onRemoteDeviceConnect() {
 }
 
 void AirChargerClass::onRemoteDeviceDisconnect() {
+  Display.showSplash();
   ESP.restart();
 }
 
