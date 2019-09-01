@@ -6,6 +6,12 @@
   "files.associations": {
     "sstream": "cpp",
     "array": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "*.tcc": "cpp",
+    "deque": "cpp",
+    "unordered_map": "cpp",
+    "unordered_set": "cpp",
+    "vector": "cpp",
+    "system_error": "cpp"
   }
 }
