@@ -11,5 +11,5 @@
 // Comment the next line to disable debug mode.
 #define DEBUG
 
-// 60 FPS
-#define UPDATE_INTERVAL 17
+// 30 FPS
+#define UPDATE_INTERVAL 33
