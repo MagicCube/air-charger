@@ -5,7 +5,7 @@
 #include "../../ble/BLEPeripheral.h"
 #include "../../utils/format.h"
 
-MainScene::MainScene() : _clockFrame(13, TFT_HEIGHT - 54 - 12, TFT_WIDTH - 13 * 2, 54) {
+MainScene::MainScene() : _clockFrame(13, TFT_HEIGHT - 52 - 12, TFT_WIDTH - 13 * 2, 52) {
 
 }
 
@@ -25,14 +25,18 @@ void MainScene::redraw(TFT_eSPI *canvas) {
 }
 
 void MainScene::_drawClock(TFT_eSPI *canvas) {
-  DateTime now(DateTime::now());
-  String timeString = formatTime(now);
+  auto now = DateTime::now();
+  DateTime time(now);
+  if (now < 1000 * 60 *60) {
+    return;
+  }
+  String timeString = formatTime(time);
   if (_clock == nullptr) {
     _clock = new TFT_eSprite(canvas);
-    _clock->setColorDepth(8);
+    _clock->setColorDepth(1);
   }
   _clock->createSprite(_clockFrame.width, _clockFrame.height);
-  _clock->fillSprite(TFT_RED);
+  // _clock->fillSprite(TFT_RED);
   _clock->setTextColor(TFT_WHITE);
   _clock->setTextFont(7);
   _clock->setTextSize(1);
