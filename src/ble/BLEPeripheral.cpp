@@ -57,14 +57,16 @@ void BLEPeripheralClass::startScanningMode(ble_address_t addressSearchingFor) {
     _scanner = new BLEScanner();
     _scanner->begin();
   }
-  auto foundDevice = _scanner->search(addressSearchingFor);
+  _scanner->search(addressSearchingFor);
+#endif
+}
+
+void BLEPeripheralClass::continueSearching() {
+  auto foundDevice = _scanner->continueSearching();
   if (foundDevice != nullptr) {
     LOG_I("<<< YES, WE FOUND IT >>>");
     setState(BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT);
-  } else {
-    setState(BLEPeripheralState::IDLE);
   }
-#endif
 }
 
 void BLEPeripheralClass::connectRemoteDevice(ble_address_t address) {

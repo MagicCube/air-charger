@@ -17,10 +17,13 @@ public:
   BLEAdvertisedDevice *search(ble_address_t address);
 
   // Starts BLE scanning.
-  BLEAdvertisedDevice *startScanning();
+  void startScanning();
 
   // Stops BLE scanning.
   void stopScanning();
+
+  // Continue to search.
+  BLEAdvertisedDevice *continueSearching();
 
   // Implements `BLEAdvertisedDeviceCallbacks`
   void onResult(BLEAdvertisedDevice advertisedDevice);

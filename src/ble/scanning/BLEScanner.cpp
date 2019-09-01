@@ -13,20 +13,22 @@ void BLEScanner::begin() {
 BLEAdvertisedDevice *BLEScanner::search(ble_address_t address) {
   _searchingAddress = BLEAddress(address);
   startScanning();
-  BLEDevice::getScan()->erase(_searchingAddress);
   return _foundDevice;
 }
 
-BLEAdvertisedDevice *BLEScanner::startScanning() {
+void BLEScanner::startScanning() {
   _foundDevice = nullptr;
   auto scan = BLEDevice::getScan();
   scan->setAdvertisedDeviceCallbacks(this, false);
-  scan->clearResults();
   scan->setInterval(100);
   scan->setWindow(99);
   scan->setActiveScan(true);
   LOG_I("Scanning has been <STARTED>.");
-  scan->start(60 * 60 * 24 * 365);
+}
+
+BLEAdvertisedDevice *BLEScanner::continueSearching() {
+  auto scan = BLEDevice::getScan();
+  scan->start(1, true);
   return _foundDevice;
 }
 

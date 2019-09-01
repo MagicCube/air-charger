@@ -43,6 +43,8 @@ uint16_t AirChargerClass::update() {
 void AirChargerClass::_checkConnection() {
   if (BLEPeripheral.state() == BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT) {
     BLEPeripheral.connectRemoteDevice(AirChargerSettings.getClientAddress());
+  } else if (BLEPeripheral.state() == BLEPeripheralState::SCANNING) {
+    BLEPeripheral.continueSearching();
   }
 }
 

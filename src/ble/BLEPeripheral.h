@@ -46,6 +46,7 @@ public:
   void startParingMode();
   void startScanningMode(ble_address_t addressLookingFor);
   void connectRemoteDevice(ble_address_t remoteAddress);
+  void continueSearching();
 
   // Implements `BLERemoteDeviceCallbacks`.
   void onConnect();
