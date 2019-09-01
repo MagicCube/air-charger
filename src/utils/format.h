@@ -7,5 +7,5 @@
 
 String formatBLEAddress(ble_address_t bytes);
 String formatDate(DateTime dateTime);
-String formatTime(DateTime dateTime);
+String formatTime(DateTime dateTime, bool includingSeconds = true);
 String formatDateTime(DateTime dateTime);

@@ -7,10 +7,10 @@ String formatBLEAddress(ble_address_t bytes) {
   return String(result);
 }
 
-String formatTime(DateTime dateTime) {
+String formatTime(DateTime dateTime, bool includingSeconds) {
   char result[10];
-  sprintf(result, "%02d:%02d:%02d", dateTime.getHours(), dateTime.getMinutes(),
-          dateTime.getSeconds());
+  auto *format = includingSeconds ? "%02d:%02d:%02d" : "%02d:%02d";
+  sprintf(result, format, dateTime.getHours(), dateTime.getMinutes(), dateTime.getSeconds());
   return String(result);
 }
 
