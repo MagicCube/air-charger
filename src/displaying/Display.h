@@ -15,10 +15,12 @@ public:
   TFT_eSPI canvas();
 
   void update(bool forceRedraw = false);
+  void clear();
   void showMessage(String message);
 
 private:
   TFT_eSPI _tft;
+  Scene *_currentScene = nullptr;
   ConnectScene *_connectScene = nullptr;
   MainScene *_mainScene = nullptr;
 };

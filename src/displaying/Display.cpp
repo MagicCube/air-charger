@@ -5,7 +5,7 @@
 void DisplayClass::begin() {
   _tft.init();
   _tft.setRotation(1);
-  _tft.fillScreen(TFT_BLACK);
+  clear();
 
   _tft.setTextColor(TFT_WHITE);
   _tft.setFreeFont(&FreeSans18pt7b);
@@ -39,6 +39,10 @@ void DisplayClass::update(bool forceRedraw) {
   default:
     break;
   }
+  if (_currentScene != scene) {
+    Display.clear();
+    _currentScene = scene;
+  }
   if (scene != nullptr) {
     if (scene->update(forceRedraw)) {
       scene->redraw(&_tft);
@@ -46,8 +50,12 @@ void DisplayClass::update(bool forceRedraw) {
   }
 }
 
-void DisplayClass::showMessage(String message) {
+void DisplayClass::clear() {
   _tft.fillScreen(TFT_BLACK);
+}
+
+void DisplayClass::showMessage(String message) {
+  clear();
   _tft.setTextColor(TFT_WHITE);
   _tft.setTextFont(4);
   _tft.setTextSize(1);
