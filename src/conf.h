@@ -11,8 +11,5 @@
 // Comment the next line to disable debug mode.
 #define DEBUG
 
-// GMT +8
-#define TIME_ZONE_OFFSET 8 * 60
-
 // 60 FPS
 #define UPDATE_INTERVAL 17

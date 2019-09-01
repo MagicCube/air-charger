@@ -20,7 +20,7 @@ DateTime::DateTime(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint
   localTime.tm_min = min;
   localTime.tm_sec = sec;
   localTime.tm_isdst = -1;
-  _time = mktime(&localTime) - TIME_ZONE_OFFSET * 60;
+  _time = mktime(&localTime);
   _localTime = localtime(&_time);
 }
 
