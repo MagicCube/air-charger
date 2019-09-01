@@ -1,5 +1,7 @@
 #include "ConnectScene.h"
 
+#include "../../resources/bluetooth_logo.h"
+
 bool ConnectScene::update(bool forceRedraw) {
   BLEPeripheralState currentState = BLEPeripheral.state();
   bool redraw = false;
@@ -29,9 +31,11 @@ void ConnectScene::redraw(TFT_eSPI *canvas) {
   }
 
   canvas->fillScreen(TFT_BLACK);
+  canvas->drawXBitmap((TFT_WIDTH - bluetooth_logo_width) / 2, 40, bluetooth_logo_bits,
+                      bluetooth_logo_width, bluetooth_logo_height, TFT_BLUE);
   canvas->setTextColor(TFT_WHITE);
   canvas->setTextFont(4);
   canvas->setTextSize(1);
   canvas->setTextDatum(CC_DATUM);
-  canvas->drawString(stateStr, TFT_WIDTH / 2, TFT_HEIGHT / 2);
+  canvas->drawString(stateStr, TFT_WIDTH / 2, 40 + bluetooth_logo_height + 40);
 }
