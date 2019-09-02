@@ -79,10 +79,10 @@ void MainScene::_drawBattery(TFT_eSPI *canvas) {
   int batteryWidth = ((float)(_batteryFrame.width - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
                      (batteryLevel / 100);
   auto batteryColor = Charger.isCharging() ? TFT_DARKGREEN : TFT_GREY;
-  if (batteryLevel <= 20) {
-    batteryColor = TFT_ORANGE;
-  } else if (batteryLevel <= 10) {
+  if (batteryLevel <= 10) {
     batteryColor = TFT_RED;
+  } else if (batteryLevel <= 20) {
+    batteryColor = TFT_ORANGE;
   }
   auto batteryTextColor = TFT_WHITE;
   _battery->fillRect(BATTERY_PADDING, BATTERY_PADDING, batteryWidth,
