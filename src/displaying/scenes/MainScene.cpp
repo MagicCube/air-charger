@@ -26,17 +26,26 @@ bool MainScene::update(bool forceRedraw) {
   bool redraw = false;
   if (forceRedraw) {
     redraw = true;
-  } else if (millis() - _lastRedraw > 1000) {
+  } else if (millis() - _lastRedraw > UPDATE_INTERVAL) {
     redraw = true;
   }
   return redraw;
 }
 
 void MainScene::redraw(TFT_eSPI *canvas) {
+  _drawBackground(canvas);
   _drawClock(canvas);
   _drawBattery(canvas);
   _drawChargingIndicator(canvas);
   _lastRedraw = millis();
+}
+
+void MainScene::_drawBackground(TFT_eSPI *canvas) {
+  if (_animation == nullptr) {
+    _animation = new StarfieldAnimation(canvas);
+    _animation->begin();
+  }
+  _animation->redraw();
 }
 
 void MainScene::_drawClock(TFT_eSPI *canvas) {

@@ -4,9 +4,7 @@
 
 #include <TFT_eSPI.h>
 
-#ifndef NSTARS
-#define NSTARS 40
-#endif
+#include "../conf.h"
 
 #define MAX_STAR_SIZE 5
 
@@ -25,7 +23,7 @@ private:
   unsigned long _lastUpdate = 0;
 
   bool _isInCanvas(int x, int y);
-  void _drawStar(uint8_t x, uint8_t y, uint8_t size, uint32_t color);
+  void _drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color);
   uint8_t _rng();
   int _xScale(uint8_t x, uint8_t z);
   int _yScale(uint8_t y, uint8_t z);

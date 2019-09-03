@@ -22,20 +22,18 @@ void StarfieldAnimation::redraw() {
     } else {
       int last_x = _xScale(sx[i], sz[i]);
       int last_y = _yScale(sy[i], sz[i]);
-      int last_z = _zScale(sz[i]);
 
       // This is a faster pixel drawing function for occassions where many single pixels must be
       // drawn
-      _drawStar(last_x, last_y, last_z, TFT_BLACK);
+      _drawStar(last_x, last_y, sz[i], TFT_BLACK);
 
       sz[i] -= 2;
       if (sz[i] > 1) {
         int x = _xScale(sx[i], sz[i]);
         int y = _yScale(sy[i], sz[i]);
-        int z = _zScale(sz[i]);
 
         if (_isInCanvas(x, y)) {
-          _drawStar(x, y, z, _colorScale(sz[i]));
+          _drawStar(x, y, sz[i], _colorScale(sz[i]));
         } else {
           sz[i] = 0; // Out of screen, die.
         }
@@ -48,8 +46,9 @@ bool StarfieldAnimation::_isInCanvas(int x, int y) {
   return x >= 0 && y >= 0 && x < TFT_WIDTH && y < TFT_HEIGHT;
 }
 
-void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t size, uint32_t color) {
-  _canvas->fillCircle(x, y, size, color);
+void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color) {
+  _canvas->fillCircle(x, y, _zScale(z), color);
+  // _canvas->drawPixel(x, y, color);
 }
 
 uint8_t StarfieldAnimation::_rng() {

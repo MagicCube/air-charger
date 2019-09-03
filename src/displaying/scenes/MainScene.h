@@ -4,6 +4,8 @@
 
 #include "Scene.h"
 
+#include "../../animations/StarfieldAnimation.h"
+
 class MainScene : public Scene {
 public:
   MainScene();
@@ -21,6 +23,9 @@ private:
 
   Rect _chargingIndicatorFrame;
 
+  StarfieldAnimation *_animation = nullptr;
+
+  void _drawBackground(TFT_eSPI *canvas);
   void _drawClock(TFT_eSPI *canvas);
   void _drawBattery(TFT_eSPI *canvas);
   void _drawChargingIndicator(TFT_eSPI *canvas);
