@@ -1,17 +1,14 @@
 #include "StarfieldAnimation.h"
 
-#define TFT_HALF_WIDTH TFT_WIDTH / 2
-#define TFT_HALF_HEIGHT TFT_HEIGHT / 2
-
-StarfieldAnimation::StarfieldAnimation(TFT_eSPI *pTFT) {
-  tft = pTFT;
+StarfieldAnimation::StarfieldAnimation(TFT_eSPI *tft) {
+  _canvas = tft;
 }
 
 void StarfieldAnimation::begin() {
-  za = random(256);
-  zb = random(256);
-  zc = random(256);
-  zx = random(256);
+  _za = random(256);
+  _zb = random(256);
+  _zc = random(256);
+  _zx = random(256);
 }
 
 void StarfieldAnimation::redraw() {
@@ -19,13 +16,13 @@ void StarfieldAnimation::redraw() {
 
   for (uint8_t i = 0; i < NSTARS; ++i) {
     if (sz[i] <= 1) {
-      sx[i] = TFT_HALF_WIDTH - TFT_HALF_HEIGHT + _rng();
+      sx[i] = TFT_WIDTH / 2 - TFT_HEIGHT / 2 + _rng();
       sy[i] = _rng();
       sz[i] = spawnDepthVariation--;
     } else {
-      int last_x = scaleX(sx[i], sz[i]);
-      int last_y = scaleX(sy[i], sz[i]);
-      int last_z = scaleZ(sz[i]);
+      int last_x = _xScale(sx[i], sz[i]);
+      int last_y = _yScale(sy[i], sz[i]);
+      int last_z = _zScale(sz[i]);
 
       // This is a faster pixel drawing function for occassions where many single pixels must be
       // drawn
@@ -33,12 +30,12 @@ void StarfieldAnimation::redraw() {
 
       sz[i] -= 2;
       if (sz[i] > 1) {
-        int x = scaleX(sx[i], sz[i]);
-        int y = scaleX(sy[i], sz[i]);
-        int z = scaleZ(sz[i]);
+        int x = _xScale(sx[i], sz[i]);
+        int y = _yScale(sy[i], sz[i]);
+        int z = _zScale(sz[i]);
 
-        if (x >= 0 && y >= 0 && x < TFT_WIDTH && y < TFT_HEIGHT) {
-          _drawStar(x, y, z, colorScale(sz[i]));
+        if (_isInCanvas(x, y)) {
+          _drawStar(x, y, z, _colorScale(sz[i]));
         } else {
           sz[i] = 0; // Out of screen, die.
         }
@@ -47,32 +44,36 @@ void StarfieldAnimation::redraw() {
   }
 }
 
+bool StarfieldAnimation::_isInCanvas(int x, int y) {
+  return x >= 0 && y >= 0 && x < TFT_WIDTH && y < TFT_HEIGHT;
+}
+
 void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t size, uint32_t color) {
-  tft->fillCircle(x, y, size, color);
+  _canvas->fillCircle(x, y, size, color);
 }
 
 uint8_t StarfieldAnimation::_rng() {
-  zx++;
-  za = (za ^ zc ^ zx);
-  zb = (zb + za);
-  zc = zc + ((zb >> 1) ^ za);
-  return zc;
+  _zx++;
+  _za = (_za ^ _zc ^ _zx);
+  _zb = (_zb + _za);
+  _zc = _zc + ((_zb >> 1) ^ _za);
+  return _zc;
 }
 
-int StarfieldAnimation::scaleX(uint8_t x, uint8_t z) {
-  return ((int)x - TFT_HALF_WIDTH) * 256 / z + TFT_HALF_WIDTH;
+int StarfieldAnimation::_xScale(uint8_t x, uint8_t z) {
+  return ((int)x - TFT_WIDTH / 2) * 256 / z + TFT_WIDTH / 2;
 }
 
-int StarfieldAnimation::scaleY(uint8_t y, uint8_t z) {
-  return ((int)y - TFT_HALF_HEIGHT) * 256 / z + TFT_HALF_HEIGHT;
+int StarfieldAnimation::_yScale(uint8_t y, uint8_t z) {
+  return ((int)y - TFT_HEIGHT / 2) * 256 / z + TFT_HEIGHT / 2;
 }
 
-int StarfieldAnimation::scaleZ(uint8_t z) {
-  return 5 - z / 85;
+int StarfieldAnimation::_zScale(uint8_t z) {
+  return MAX_STAR_SIZE - z / 85;
 }
 
-int StarfieldAnimation::colorScale(uint8_t z) {
+int StarfieldAnimation::_colorScale(uint8_t z) {
   uint8_t r, g, b;
   r = g = b = 255 - z;
-  return tft->color565(r, g, b);
+  return _canvas->color565(r, g, b);
 }
