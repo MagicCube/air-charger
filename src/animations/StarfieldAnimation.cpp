@@ -48,7 +48,6 @@ bool StarfieldAnimation::_isInCanvas(int x, int y) {
 
 void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color) {
   _canvas->fillCircle(x, y, _zScale(z), color);
-  // _canvas->drawPixel(x, y, color);
 }
 
 uint8_t StarfieldAnimation::_rng() {
