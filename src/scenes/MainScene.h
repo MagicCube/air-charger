@@ -12,7 +12,7 @@ class MainScene : public Scene {
 public:
   MainScene();
   bool update(bool forceRedraw);
-  void redraw(TFT_eSPI *canvas);
+  void redraw();
 
 private:
   ClockView _clockView;

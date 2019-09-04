@@ -27,7 +27,7 @@ bool MainScene::update(bool forceRedraw) {
   return true;
 }
 
-void MainScene::redraw(TFT_eSPI *canvas) {
+void MainScene::redraw() {
   _animation.redraw();
   _clockView.redraw(true);   // Always force to redraw
   _batteryView.redraw(true); // Always force redraw
