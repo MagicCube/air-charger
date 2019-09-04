@@ -11,7 +11,6 @@
 class StarfieldAnimation {
 public:
   StarfieldAnimation();
-  void begin();
   void redraw();
 
 private:

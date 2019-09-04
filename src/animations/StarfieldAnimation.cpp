@@ -3,9 +3,6 @@
 #include "../displaying/Screen.h"
 
 StarfieldAnimation::StarfieldAnimation() {
-}
-
-void StarfieldAnimation::begin() {
   _za = random(256);
   _zb = random(256);
   _zc = random(256);
