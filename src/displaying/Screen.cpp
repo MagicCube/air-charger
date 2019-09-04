@@ -31,8 +31,11 @@ TFT_eSPI *ScreenClass::display() {
 
 void ScreenClass::clear() {
   _tft.fillScreen(TFT_BLACK);
+
+  #ifdef DEBUG
   auto s = size();
-  _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2, TFT_RED);
+  _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, TFT_DARKGREY);
+  #endif
 }
 
 void ScreenClass::showSplash() {

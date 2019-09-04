@@ -32,6 +32,11 @@ void MainScene::redraw() {
   _clockView.redraw(true);   // Always force to redraw
   _batteryView.redraw(true); // Always force redraw
   _drawChargingIndicator();
+
+  #ifdef DEBUG
+  auto context = TFTDrawingContext::getScreenDrawingContext();
+  context->drawCircle(context->bounds().middlePoint(), context->size().width / 2 - 1, TFT_DARKGREY);
+  #endif
 }
 
 void MainScene::_drawChargingIndicator() {
