@@ -50,7 +50,7 @@ void MainScene::_drawClock() {
 
 void MainScene::_drawBattery() {
   if (_batteryView == nullptr) {
-    _batteryView = new BatteryView(Point((240 - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128));
+    _batteryView = new BatteryView();
   }
   _batteryView->batteryLevel(BLEPeripheral.remoteDevice()->batteryLevel());
   _batteryView->isCharging(Charger.isCharging());

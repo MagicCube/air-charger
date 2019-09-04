@@ -10,7 +10,7 @@
 
 class BatteryView : public View {
 public:
-  BatteryView(Point position);
+  BatteryView();
 
   uint8_t batteryLevel();
   void batteryLevel(uint8_t value);

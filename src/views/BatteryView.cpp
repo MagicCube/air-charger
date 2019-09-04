@@ -6,7 +6,8 @@
 
 #include "../displaying/Screen.h"
 
-BatteryView::BatteryView(Point position) : View(Rect(position, 160, 60)) {
+BatteryView::BatteryView()
+    : View(Rect((TFT_WIDTH - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128, 160, 60)) {
 }
 
 uint8_t BatteryView::batteryLevel() {
