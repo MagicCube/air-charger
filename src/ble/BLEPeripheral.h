@@ -39,8 +39,8 @@ public:
   void begin(String deviceName);
 
   BLEPeripheralState state();
-  void setState(BLEPeripheralState newState);
-  BLERemoteDevice *getRemoteDevice();
+  void state(BLEPeripheralState newState);
+  BLERemoteDevice *remoteDevice();
   void setCallbacks(BLEPeripheralCallbacks *callbacks);
 
   void startParingMode();

@@ -20,7 +20,7 @@ BLEPeripheralState BLEPeripheralClass::state() {
   return _state;
 }
 
-void BLEPeripheralClass::setState(BLEPeripheralState newState) {
+void BLEPeripheralClass::state(BLEPeripheralState newState) {
   if (_state != newState) {
     _state = newState;
     if (_callbacks) {
@@ -29,7 +29,7 @@ void BLEPeripheralClass::setState(BLEPeripheralState newState) {
   }
 }
 
-BLERemoteDevice *BLEPeripheralClass::getRemoteDevice() {
+BLERemoteDevice *BLEPeripheralClass::remoteDevice() {
   return _remoteDevice;
 }
 
@@ -39,7 +39,7 @@ void BLEPeripheralClass::setCallbacks(BLEPeripheralCallbacks *callbacks) {
 
 void BLEPeripheralClass::startParingMode() {
   LOG_I("Starting in <PARING> mode...");
-  setState(BLEPeripheralState::PARING);
+  state(BLEPeripheralState::PARING);
 #ifdef BLE_ENABLED
   if (_paringServer == nullptr) {
     _paringServer = new BLEParingServer();
@@ -51,7 +51,7 @@ void BLEPeripheralClass::startParingMode() {
 void BLEPeripheralClass::startScanningMode(ble_address_t addressSearchingFor) {
   LOG_I("Starting in <SCANNING> mode...");
   LOG_I("Searching for device [%s]...", formatBLEAddress(addressSearchingFor).c_str());
-  setState(BLEPeripheralState::SCANNING);
+  state(BLEPeripheralState::SCANNING);
 #ifdef BLE_ENABLED
   if (_scanner == nullptr) {
     _scanner = new BLEScanner();
@@ -65,13 +65,13 @@ void BLEPeripheralClass::continueSearching() {
   auto foundDevice = _scanner->continueSearching();
   if (foundDevice != nullptr) {
     LOG_I("<<< YES, WE FOUND IT >>>");
-    setState(BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT);
+    state(BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT);
   }
 }
 
 void BLEPeripheralClass::connectRemoteDevice(ble_address_t address) {
   LOG_I("Try to connect to [%s]...", formatBLEAddress(address).c_str());
-  setState(BLEPeripheralState::REMOTE_DEVICE_CONNECTING);
+  state(BLEPeripheralState::REMOTE_DEVICE_CONNECTING);
 #ifdef BLE_ENABLED
   if (_remoteDevice == nullptr) {
     _remoteDevice = new BLERemoteDevice();
@@ -83,14 +83,14 @@ void BLEPeripheralClass::connectRemoteDevice(ble_address_t address) {
 }
 
 void BLEPeripheralClass::onConnect() {
-  setState(BLEPeripheralState::REMOTE_DEVICE_CONNECTED);
+  state(BLEPeripheralState::REMOTE_DEVICE_CONNECTED);
   if (_callbacks) {
     _callbacks->onRemoteDeviceConnect();
   }
 }
 
 void BLEPeripheralClass::onDisconnect() {
-  setState(BLEPeripheralState::REMOTE_DEVICE_DISCONNECTED);
+  state(BLEPeripheralState::REMOTE_DEVICE_DISCONNECTED);
   if (_callbacks) {
     _callbacks->onRemoteDeviceDisconnect();
   }

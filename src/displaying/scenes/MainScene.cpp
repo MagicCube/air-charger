@@ -84,7 +84,7 @@ void MainScene::_drawBattery(TFT_eSPI *canvas) {
                           (_batteryFrame.height() - headHeight) / 2, BATTERY_HEAD_WIDTH, headHeight,
                           BATTERY_ROUNDNESS, TFT_WHITE);
 
-  float batteryLevel = BLEPeripheral.getRemoteDevice()->batteryLevel();
+  float batteryLevel = BLEPeripheral.remoteDevice()->batteryLevel();
   int batteryWidth =
       ((float)(_batteryFrame.width() - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
       (batteryLevel / 100);
