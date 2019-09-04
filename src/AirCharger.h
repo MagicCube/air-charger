@@ -10,6 +10,9 @@
 #include "displaying/Screen.h"
 #include "charging/Charger.h"
 
+#include "scenes/ConnectScene.h"
+#include "scenes/MainScene.h"
+
 class AirChargerClass : BLEPeripheralCallbacks {
 public:
   // Initializes the `AirCharger` with given device name.
@@ -27,7 +30,12 @@ public:
 
 private:
   unsigned long _lastUpdate = 0;
-  void _checkConnection();
+  Scene *_currentScene = nullptr;
+  ConnectScene *_connectScene = nullptr;
+  MainScene *_mainScene = nullptr;
+
+  void _updateScene(bool forceUpdate = false);
+  void _updateConnection();
 };
 
 extern AirChargerClass AirCharger;

@@ -4,6 +4,8 @@
 
 #include "View.h"
 
+#include "../drawing/tft/TFTDrawingContext.h"
+
 class ClockView : public View {
 public:
   ClockView();

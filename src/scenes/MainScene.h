@@ -5,8 +5,6 @@
 #include "Scene.h"
 
 #include "../animations/StarfieldAnimation.h"
-#include "../drawing/tft/TFTDrawingContext.h"
-
 #include "../views/ClockView.h"
 #include "../views/BatteryView.h"
 

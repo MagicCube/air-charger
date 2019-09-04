@@ -28,8 +28,8 @@ void AirChargerClass::begin(String deviceName) {
 uint16_t AirChargerClass::update() {
   auto updateStart = millis();
 
-  Screen.update();
-  _checkConnection();
+  _updateScene();
+  _updateConnection();
 
   unsigned long elapsedSinceLastUpdate = millis() - _lastUpdate;
   uint16_t timeBudget = 0;
@@ -40,7 +40,39 @@ uint16_t AirChargerClass::update() {
   return timeBudget;
 }
 
-void AirChargerClass::_checkConnection() {
+void AirChargerClass::_updateScene(bool forceUpdate) {
+  Scene *scene = nullptr;
+  BLEPeripheralState currentState = BLEPeripheral.state();
+  switch (currentState) {
+  case BLEPeripheralState::SCANNING:
+  case BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT:
+  case BLEPeripheralState::REMOTE_DEVICE_CONNECTING:
+    if (_connectScene == nullptr) {
+      _connectScene = new ConnectScene();
+    }
+    scene = _connectScene;
+    break;
+  case BLEPeripheralState::REMOTE_DEVICE_CONNECTED:
+    if (_mainScene == nullptr) {
+      _mainScene = new MainScene();
+    }
+    scene = _mainScene;
+    break;
+  default:
+    break;
+  }
+  if (_currentScene != scene) {
+    Screen.clear();
+    _currentScene = scene;
+  }
+  if (_currentScene != nullptr) {
+    if (_currentScene->update(false)) {
+      _currentScene->redraw(Screen.display());
+    }
+  }
+}
+
+void AirChargerClass::_updateConnection() {
   if (BLEPeripheral.state() == BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT) {
     BLEPeripheral.connectRemoteDevice(AirChargerSettings.clientAddress());
   } else if (BLEPeripheral.state() == BLEPeripheralState::SCANNING) {
@@ -49,7 +81,7 @@ void AirChargerClass::_checkConnection() {
 }
 
 void AirChargerClass::onStateChanged() {
-  Screen.update(true);
+  _updateScene(true);
 }
 
 void AirChargerClass::onRemoteDeviceConnect() {
@@ -61,7 +93,7 @@ void AirChargerClass::onRemoteDeviceDisconnect() {
 }
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {
-  Screen.update(true);
+  _updateScene(true);
 }
 
 void AirChargerClass::onRemoteDeviceTime(DateTime time) {

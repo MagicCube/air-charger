@@ -28,38 +28,6 @@ TFTDrawingContext *ScreenClass::drawingContext() {
   return _drawingContext;
 }
 
-void ScreenClass::update(bool forceRedraw) {
-  Scene *scene = nullptr;
-  BLEPeripheralState currentState = BLEPeripheral.state();
-  switch (currentState) {
-  case BLEPeripheralState::SCANNING:
-  case BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT:
-  case BLEPeripheralState::REMOTE_DEVICE_CONNECTING:
-    if (_connectScene == nullptr) {
-      _connectScene = new ConnectScene();
-    }
-    scene = _connectScene;
-    break;
-  case BLEPeripheralState::REMOTE_DEVICE_CONNECTED:
-    if (_mainScene == nullptr) {
-      _mainScene = new MainScene();
-    }
-    scene = _mainScene;
-    break;
-  default:
-    break;
-  }
-  if (_currentScene != scene) {
-    clear();
-    _currentScene = scene;
-  }
-  if (scene != nullptr) {
-    if (scene->update(forceRedraw)) {
-      scene->redraw(&_tft);
-    }
-  }
-}
-
 void ScreenClass::clear() {
   _tft.fillScreen(TFT_BLACK);
 }

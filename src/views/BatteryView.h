@@ -4,6 +4,8 @@
 
 #include "View.h"
 
+#include "../drawing/tft/TFTDrawingContext.h"
+
 #define BATTERY_HEAD_WIDTH 6
 #define BATTERY_ROUNDNESS 4
 #define BATTERY_PADDING 5
