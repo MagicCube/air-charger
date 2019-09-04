@@ -1,7 +1,5 @@
 #include "TFTDrawingContext.h"
 
-#include <typeinfo>
-
 static TFTDrawingContext *__screenDrawingContext = nullptr;
 
 TFTDrawingContext::TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, Size size,
