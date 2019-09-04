@@ -9,6 +9,13 @@
 
 #include "../../resources/charging_indicator.h"
 
+MainScene::MainScene() {
+  _animation.setBlackHole(_batteryView.frame());
+  _chargingIndicatorFrame =
+      Rect(_batteryView.frame().left() - charging_indicator_width - 8,
+           _batteryView.frame().top() + 8, charging_indicator_width, charging_indicator_height);
+}
+
 bool MainScene::update(bool forceRedraw) {
   auto now = DateTime::now();
   DateTime time(now);
@@ -22,25 +29,21 @@ bool MainScene::update(bool forceRedraw) {
 
 void MainScene::redraw(TFT_eSPI *canvas) {
   _animation.redraw();
-  _clockView.redraw(true); // Always force to redraw
+  _clockView.redraw(true);   // Always force to redraw
   _batteryView.redraw(true); // Always force redraw
   _drawChargingIndicator();
 }
 
 void MainScene::_drawChargingIndicator() {
   auto context = Screen.drawingContext();
-  auto chargingIndicatorFrame =
-      Rect(_batteryView.frame().left() - charging_indicator_width - 8,
-           _batteryView.frame().top() + 8, charging_indicator_width,
-           charging_indicator_height);
   if (Charger.isCharging()) {
     context->drawXBitmap(charging_indicator_bits,
-                         Rect(chargingIndicatorFrame.left(), chargingIndicatorFrame.top(),
-                              chargingIndicatorFrame.width(), chargingIndicatorFrame.height()),
+                         Rect(_chargingIndicatorFrame.left(), _chargingIndicatorFrame.top(),
+                              _chargingIndicatorFrame.width(), _chargingIndicatorFrame.height()),
                          TFT_WHITE);
   } else {
-    context->fillRect(Rect(chargingIndicatorFrame.left(), chargingIndicatorFrame.top(),
-                           chargingIndicatorFrame.width(), chargingIndicatorFrame.height()),
+    context->fillRect(Rect(_chargingIndicatorFrame.left(), _chargingIndicatorFrame.top(),
+                           _chargingIndicatorFrame.width(), _chargingIndicatorFrame.height()),
                       TFT_BLACK);
   }
 }

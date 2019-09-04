@@ -2,11 +2,19 @@
 
 #include "../displaying/Screen.h"
 
+#define BLACK_HOLE_SPACING 3
+
 StarfieldAnimation::StarfieldAnimation() {
   _za = random(256);
   _zb = random(256);
   _zc = random(256);
   _zx = random(256);
+}
+
+void StarfieldAnimation::setBlackHole(Rect value) {
+  _blackHole =
+      Rect(value.left() - BLACK_HOLE_SPACING, value.top() - BLACK_HOLE_SPACING,
+           value.width() + BLACK_HOLE_SPACING * 2, value.height() + BLACK_HOLE_SPACING * 2);
 }
 
 void StarfieldAnimation::redraw() {
@@ -44,7 +52,7 @@ void StarfieldAnimation::redraw() {
 
 bool StarfieldAnimation::_shouldDrawStar(Point position) {
   if (Screen.bounds().contains(position)) {
-    return true;
+    return !_blackHole.contains(position);
   }
   return false;
 }

@@ -12,6 +12,9 @@
 class StarfieldAnimation {
 public:
   StarfieldAnimation();
+
+  void setBlackHole(Rect blackHole);
+
   void redraw();
 
 private:
@@ -20,6 +23,8 @@ private:
   uint8_t sy[NSTARS] = {};
   uint8_t sz[NSTARS] = {};
   unsigned long _lastUpdate = 0;
+
+  Rect _blackHole;
 
   bool _shouldDrawStar(Point position);
   void _drawStar(Point position, uint8_t z, uint32_t color);
