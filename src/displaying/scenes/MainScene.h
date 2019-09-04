@@ -16,15 +16,10 @@ public:
   void redraw(TFT_eSPI *canvas);
 
 private:
-  unsigned long _lastRedraw = 0;
+  ClockView _clockView;
+  BatteryView _batteryView;
 
-  ClockView *_clockView = nullptr;
-  BatteryView *_batteryView = nullptr;
+  StarfieldAnimation _animation;
 
-  StarfieldAnimation *_animation = nullptr;
-
-  void _drawBackground();
-  void _drawClock();
-  void _drawBattery();
   void _drawChargingIndicator();
 };
