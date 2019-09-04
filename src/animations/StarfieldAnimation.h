@@ -10,19 +10,18 @@
 
 class StarfieldAnimation {
 public:
-  StarfieldAnimation(TFT_eSPI *tft);
+  StarfieldAnimation();
   void begin();
   void redraw();
 
 private:
-  TFT_eSPI *_canvas;
   uint8_t _za, _zb, _zc, _zx;
   uint8_t sx[NSTARS] = {};
   uint8_t sy[NSTARS] = {};
   uint8_t sz[NSTARS] = {};
   unsigned long _lastUpdate = 0;
 
-  bool _isInCanvas(int x, int y);
+  bool _isInScreen(int x, int y);
   void _drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color);
   uint8_t _rng();
   int _xScale(uint8_t x, uint8_t z);

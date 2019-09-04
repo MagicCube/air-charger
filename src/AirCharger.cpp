@@ -17,8 +17,8 @@ void AirChargerClass::begin(String deviceName) {
   if (AirChargerSettings.hasClientAddress()) {
     BLEPeripheral.startScanningMode(AirChargerSettings.clientAddress());
   } else {
-    Display.showMessage("Paring...");
-    Display.showMessage(DEVICE_NAME);
+    Screen.showMessage("Paring...");
+    Screen.showMessage(DEVICE_NAME);
     BLEPeripheral.startParingMode();
   }
   LOG_I("AirCharger is now initialized.");
@@ -28,7 +28,7 @@ void AirChargerClass::begin(String deviceName) {
 uint16_t AirChargerClass::update() {
   auto updateStart = millis();
 
-  Display.update();
+  Screen.update();
   _checkConnection();
 
   unsigned long elapsedSinceLastUpdate = millis() - _lastUpdate;
@@ -49,19 +49,19 @@ void AirChargerClass::_checkConnection() {
 }
 
 void AirChargerClass::onStateChanged() {
-  Display.update(true);
+  Screen.update(true);
 }
 
 void AirChargerClass::onRemoteDeviceConnect() {
 }
 
 void AirChargerClass::onRemoteDeviceDisconnect() {
-  Display.showSplash();
+  Screen.showSplash();
   ESP.restart();
 }
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {
-  Display.update(true);
+  Screen.update(true);
 }
 
 void AirChargerClass::onRemoteDeviceTime(DateTime time) {

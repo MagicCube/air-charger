@@ -1,7 +1,8 @@
 #include "StarfieldAnimation.h"
 
-StarfieldAnimation::StarfieldAnimation(TFT_eSPI *tft) {
-  _canvas = tft;
+#include "../displaying/Screen.h"
+
+StarfieldAnimation::StarfieldAnimation() {
 }
 
 void StarfieldAnimation::begin() {
@@ -32,7 +33,7 @@ void StarfieldAnimation::redraw() {
         int x = _xScale(sx[i], sz[i]);
         int y = _yScale(sy[i], sz[i]);
 
-        if (_isInCanvas(x, y)) {
+        if (_isInScreen(x, y)) {
           _drawStar(x, y, sz[i], _colorScale(sz[i]));
         } else {
           sz[i] = 0; // Out of screen, die.
@@ -42,12 +43,13 @@ void StarfieldAnimation::redraw() {
   }
 }
 
-bool StarfieldAnimation::_isInCanvas(int x, int y) {
+bool StarfieldAnimation::_isInScreen(int x, int y) {
   return x >= 0 && y >= 0 && x < TFT_WIDTH && y < TFT_HEIGHT;
 }
 
 void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color) {
-  _canvas->fillCircle(x, y, _zScale(z), color);
+  auto context = Screen.screenDrawingContext();
+  context->fillCircle(Point(x, y), _zScale(z), color);
 }
 
 uint8_t StarfieldAnimation::_rng() {
@@ -73,5 +75,5 @@ int StarfieldAnimation::_zScale(uint8_t z) {
 int StarfieldAnimation::_colorScale(uint8_t z) {
   uint8_t r, g, b;
   r = g = b = 255 - z;
-  return _canvas->color565(r, g, b);
+  return color565(r, g, b);
 }

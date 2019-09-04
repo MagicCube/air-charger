@@ -9,7 +9,7 @@
 #include "AirCharger.h"
 
 void setup() {
-  Display.begin();
+  Screen.begin();
 
   // Disable brownout detector
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);

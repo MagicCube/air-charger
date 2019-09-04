@@ -1,19 +1,26 @@
-#include "Display.h"
+#include "Screen.h"
 
 #include "log.h"
 
-void DisplayClass::begin() {
+void ScreenClass::begin() {
   _tft.init();
   _tft.setRotation(1);
 
   showSplash();
 }
 
-TFT_eSPI DisplayClass::canvas() {
-  return _tft;
+TFT_eSPI *ScreenClass::display() {
+  return &_tft;
 }
 
-void DisplayClass::update(bool forceRedraw) {
+TFTDrawingContext *ScreenClass::screenDrawingContext() {
+  if (_screenDrawingContext == nullptr) {
+    _screenDrawingContext = new TFTDrawingContext(&_tft, TFTDrawingContextType::SCREEN);
+  }
+  return _screenDrawingContext;
+}
+
+void ScreenClass::update(bool forceRedraw) {
   Scene *scene = nullptr;
   BLEPeripheralState currentState = BLEPeripheral.state();
   switch (currentState) {
@@ -35,7 +42,7 @@ void DisplayClass::update(bool forceRedraw) {
     break;
   }
   if (_currentScene != scene) {
-    Display.clear();
+    clear();
     _currentScene = scene;
   }
   if (scene != nullptr) {
@@ -45,11 +52,11 @@ void DisplayClass::update(bool forceRedraw) {
   }
 }
 
-void DisplayClass::clear() {
+void ScreenClass::clear() {
   _tft.fillScreen(TFT_BLACK);
 }
 
-void DisplayClass::showSplash() {
+void ScreenClass::showSplash() {
   clear();
   _tft.setTextColor(TFT_WHITE);
   _tft.setFreeFont(&FreeSans18pt7b);
@@ -58,7 +65,7 @@ void DisplayClass::showSplash() {
   _tft.drawString("AirCharger", TFT_WIDTH / 2, TFT_HEIGHT / 2);
 }
 
-void DisplayClass::showMessage(String message) {
+void ScreenClass::showMessage(String message) {
   clear();
   _tft.setTextColor(TFT_WHITE);
   _tft.setTextFont(4);
@@ -67,4 +74,4 @@ void DisplayClass::showMessage(String message) {
   _tft.drawString(message, TFT_WIDTH / 2, TFT_HEIGHT / 2);
 }
 
-DisplayClass Display;
+ScreenClass Screen;

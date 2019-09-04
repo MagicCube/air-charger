@@ -13,17 +13,17 @@ public:
     _size = size;
   }
 
-  Rect(Point origin, uint32_t width = 0, uint32_t height = 0) {
+  Rect(Point origin, int32_t width = 0, int32_t height = 0) {
     _origin = origin;
     _size = Size(width, height);
   }
 
-  Rect(uint32_t left, uint32_t top, Size size) {
+  Rect(int32_t left, int32_t top, Size size) {
     _origin = Point(left, top);
     _size = size;
   }
 
-  Rect(uint32_t left = 0, uint32_t top = 0, uint32_t width = 0, uint32_t height = 0) {
+  Rect(int32_t left = 0, int32_t top = 0, int32_t width = 0, int32_t height = 0) {
     _origin = Point(left, top);
     _size = Size(width, height);
   }
@@ -36,28 +36,32 @@ public:
     return _size;
   }
 
-  uint32_t left() {
+  int32_t left() {
     return _origin.x;
   }
 
-  uint32_t right() {
-    return _origin.x + _size.width;
+  int32_t right() {
+    return left() + width();
   }
 
-  uint32_t top() {
+  int32_t top() {
     return _origin.y;
   }
 
-  uint32_t bottom() {
-    return _origin.y + _size.height;
+  int32_t bottom() {
+    return top() + height();
   }
 
-  uint32_t width() {
-    return _origin.y;
+  int32_t width() {
+    return _size.width;
   }
 
-  uint32_t height() {
-    return _origin.y + _size.height;
+  int32_t height() {
+    return _size.height;
+  }
+
+  Point middlePoint() {
+    return Point(left() + width() / 2, top() + height() / 2);
   }
 
 private:

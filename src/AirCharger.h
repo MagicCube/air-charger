@@ -7,7 +7,7 @@
 #include "settings/Settings.h"
 #include "ble/BLEPeripheral.h"
 #include "timing/DateTime.h"
-#include "displaying/Display.h"
+#include "displaying/Screen.h"
 #include "charging/Charger.h"
 
 class AirChargerClass : BLEPeripheralCallbacks {
