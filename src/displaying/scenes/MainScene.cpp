@@ -10,7 +10,7 @@
 #include "../../resources/charging_indicator.h"
 
 MainScene::MainScene() {
-  _animation.setBlackHole(_batteryView.frame());
+  _animation.setBlackHoles(_clockView.frame(), _batteryView.frame());
   _chargingIndicatorFrame =
       Rect(_batteryView.frame().left() - charging_indicator_width - 8,
            _batteryView.frame().top() + 8, charging_indicator_width, charging_indicator_height);

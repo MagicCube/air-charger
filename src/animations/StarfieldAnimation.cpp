@@ -11,10 +11,13 @@ StarfieldAnimation::StarfieldAnimation() {
   _zx = random(256);
 }
 
-void StarfieldAnimation::setBlackHole(Rect value) {
-  _blackHole =
-      Rect(value.left() - BLACK_HOLE_SPACING, value.top() - BLACK_HOLE_SPACING,
-           value.width() + BLACK_HOLE_SPACING * 2, value.height() + BLACK_HOLE_SPACING * 2);
+void StarfieldAnimation::setBlackHoles(Rect value1, Rect value2) {
+  _blackHole1 =
+      Rect(value1.left() - BLACK_HOLE_SPACING, value1.top() - BLACK_HOLE_SPACING,
+           value1.width() + BLACK_HOLE_SPACING * 2, value1.height() + BLACK_HOLE_SPACING * 2);
+  _blackHole2 =
+      Rect(value2.left() - BLACK_HOLE_SPACING, value2.top() - BLACK_HOLE_SPACING,
+           value2.width() + BLACK_HOLE_SPACING * 2, value2.height() + BLACK_HOLE_SPACING * 2);
 }
 
 void StarfieldAnimation::redraw() {
@@ -52,7 +55,7 @@ void StarfieldAnimation::redraw() {
 
 bool StarfieldAnimation::_shouldDrawStar(Point position) {
   if (Screen.bounds().contains(position)) {
-    return !_blackHole.contains(position);
+    return !_blackHole1.contains(position) && !_blackHole2.contains(position);
   }
   return false;
 }
