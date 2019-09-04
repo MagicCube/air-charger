@@ -7,8 +7,6 @@
 
 class Scene {
 public:
-  bool is();
-  bool markAsRedraw();
   virtual bool update(bool forceRedraw) = 0;
   virtual void redraw(TFT_eSPI *canvas) = 0;
 private:
