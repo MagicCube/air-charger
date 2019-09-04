@@ -32,9 +32,11 @@ TFT_eSPI *ScreenClass::display() {
 void ScreenClass::clear() {
   _tft.fillScreen(TFT_BLACK);
 
-  #ifdef DEBUG and DRAW_CONSTRUCTION_LINE
+  #ifdef DEBUG
+  #ifdef DRAW_CONSTRUCTION_LINE
   auto s = size();
   _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, DRAW_CONSTRUCTION_LINE);
+  #endif
   #endif
 }
 

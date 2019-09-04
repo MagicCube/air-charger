@@ -33,9 +33,11 @@ void MainScene::redraw() {
   _batteryView.redraw(true); // Always force redraw
   _drawChargingIndicator();
 
-  #ifdef DEBUG and DRAW_CONSTRUCTION_LINE
+  #ifdef DEBUG
+  #ifdef DRAW_CONSTRUCTION_LINE
   auto context = TFTDrawingContext::getScreenDrawingContext();
   context->drawCircle(context->bounds().middlePoint(), context->size().width / 2 - 1, DRAW_CONSTRUCTION_LINE);
+  #endif
   #endif
 }
 
