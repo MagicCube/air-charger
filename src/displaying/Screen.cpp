@@ -13,7 +13,7 @@ TFT_eSPI *ScreenClass::display() {
   return &_tft;
 }
 
-TFTDrawingContext *ScreenClass::screenDrawingContext() {
+TFTDrawingContext *ScreenClass::drawingContext() {
   if (_screenDrawingContext == nullptr) {
     _screenDrawingContext = new TFTDrawingContext(&_tft, TFTDrawingContextType::SCREEN);
   }

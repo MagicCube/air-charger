@@ -48,7 +48,7 @@ bool StarfieldAnimation::_isInScreen(int x, int y) {
 }
 
 void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color) {
-  auto context = Screen.screenDrawingContext();
+  auto context = Screen.drawingContext();
   context->fillCircle(Point(x, y), _zScale(z), color);
 }
 

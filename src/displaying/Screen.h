@@ -14,7 +14,7 @@ public:
   void begin();
 
   TFT_eSPI *display();
-  TFTDrawingContext *screenDrawingContext();
+  TFTDrawingContext *drawingContext();
 
   void update(bool forceRedraw = false);
   void clear();

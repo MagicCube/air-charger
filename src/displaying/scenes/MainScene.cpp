@@ -9,13 +9,6 @@
 
 #include "../../resources/charging_indicator.h"
 
-MainScene::MainScene()
-    : _batteryFrame((240 - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128, 160, 60),
-      _chargingIndicatorFrame(_batteryFrame.left() - charging_indicator_width - 8,
-                              _batteryFrame.top() + 8, charging_indicator_width,
-                              charging_indicator_height) {
-}
-
 bool MainScene::update(bool forceRedraw) {
   bool redraw = false;
   if (forceRedraw) {
@@ -65,15 +58,19 @@ void MainScene::_drawBattery() {
 }
 
 void MainScene::_drawChargingIndicator() {
-  auto context = Screen.screenDrawingContext();
+  auto context = Screen.drawingContext();
+  auto chargingIndicatorFrame =
+      Rect(_batteryView->frame().left() - charging_indicator_width - 8,
+           _batteryView->frame().top() + 8, charging_indicator_width,
+           charging_indicator_height);
   if (Charger.isCharging()) {
     context->drawXBitmap(charging_indicator_bits,
-                         Rect(_chargingIndicatorFrame.left(), _chargingIndicatorFrame.top(),
-                              _chargingIndicatorFrame.width(), _chargingIndicatorFrame.height()),
+                         Rect(chargingIndicatorFrame.left(), chargingIndicatorFrame.top(),
+                              chargingIndicatorFrame.width(), chargingIndicatorFrame.height()),
                          TFT_WHITE);
   } else {
-    context->fillRect(Rect(_chargingIndicatorFrame.left(), _chargingIndicatorFrame.top(),
-                           _chargingIndicatorFrame.width(), _chargingIndicatorFrame.height()),
+    context->fillRect(Rect(chargingIndicatorFrame.left(), chargingIndicatorFrame.top(),
+                           chargingIndicatorFrame.width(), chargingIndicatorFrame.height()),
                       TFT_BLACK);
   }
 }

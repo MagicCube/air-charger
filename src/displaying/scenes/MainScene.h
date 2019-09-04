@@ -12,7 +12,6 @@
 
 class MainScene : public Scene {
 public:
-  MainScene();
   bool update(bool forceRedraw);
   void redraw(TFT_eSPI *canvas);
 
@@ -20,11 +19,7 @@ private:
   unsigned long _lastRedraw = 0;
 
   ClockView *_clockView = nullptr;
-
   BatteryView *_batteryView = nullptr;
-  Rect _batteryFrame;
-
-  Rect _chargingIndicatorFrame;
 
   StarfieldAnimation *_animation = nullptr;
 
