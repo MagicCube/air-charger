@@ -13,6 +13,8 @@ class ScreenClass {
 public:
   void begin();
 
+  Size size();
+  Rect bounds();
   TFT_eSPI *display();
   TFTDrawingContext *drawingContext();
 
@@ -22,8 +24,9 @@ public:
   void showMessage(String message);
 
 private:
+  Rect _bounds = Rect(0, 0, TFT_WIDTH, TFT_HEIGHT);
   TFT_eSPI _tft;
-  TFTDrawingContext *_screenDrawingContext = nullptr;
+  TFTDrawingContext *_drawingContext = nullptr;
   Scene *_currentScene = nullptr;
   ConnectScene *_connectScene = nullptr;
   MainScene *_mainScene = nullptr;

@@ -9,15 +9,23 @@ void ScreenClass::begin() {
   showSplash();
 }
 
+Rect ScreenClass::bounds() {
+  return _bounds;
+}
+
+Size ScreenClass::size() {
+  return _bounds.size();
+}
+
 TFT_eSPI *ScreenClass::display() {
   return &_tft;
 }
 
 TFTDrawingContext *ScreenClass::drawingContext() {
-  if (_screenDrawingContext == nullptr) {
-    _screenDrawingContext = new TFTDrawingContext(&_tft, TFTDrawingContextType::SCREEN);
+  if (_drawingContext == nullptr) {
+    _drawingContext = new TFTDrawingContext(&_tft, TFTDrawingContextType::SCREEN, size(), 16);
   }
-  return _screenDrawingContext;
+  return _drawingContext;
 }
 
 void ScreenClass::update(bool forceRedraw) {
@@ -62,7 +70,8 @@ void ScreenClass::showSplash() {
   _tft.setFreeFont(&FreeSans18pt7b);
   _tft.setTextSize(1);
   _tft.setTextDatum(CC_DATUM);
-  _tft.drawString("AirCharger", TFT_WIDTH / 2, TFT_HEIGHT / 2);
+  auto middlePoint = bounds().middlePoint();
+  _tft.drawString("AirCharger", middlePoint.x, middlePoint.y);
 }
 
 void ScreenClass::showMessage(String message) {
@@ -71,7 +80,8 @@ void ScreenClass::showMessage(String message) {
   _tft.setTextFont(4);
   _tft.setTextSize(1);
   _tft.setTextDatum(CC_DATUM);
-  _tft.drawString(message, TFT_WIDTH / 2, TFT_HEIGHT / 2);
+  auto middlePoint = bounds().middlePoint();
+  _tft.drawString(message, middlePoint.x, middlePoint.y);
 }
 
 ScreenClass Screen;
