@@ -42,13 +42,12 @@ void BatteryView::draw() {
 
     int headHeight = bounds().height() / 2;
     _drawingContext->fillRoundRect(Rect(bounds().width() - BATTERY_HEAD_WIDTH,
-                                        (bounds().height() - headHeight) / 2,
-                                        BATTERY_HEAD_WIDTH, headHeight),
+                                        (bounds().height() - headHeight) / 2, BATTERY_HEAD_WIDTH,
+                                        headHeight),
                                    BATTERY_ROUNDNESS, TFT_WHITE);
 
-    int batteryWidth =
-        ((float)(bounds().width() - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
-        ((float)_batteryLevel / 100);
+    int batteryWidth = ((float)(bounds().width() - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
+                       ((float)_batteryLevel / 100);
     auto batteryColor = _isCharging ? TFT_DARKGREEN : TFT_GREY;
     if (_batteryLevel <= 10) {
       batteryColor = TFT_RED;
@@ -68,5 +67,4 @@ void BatteryView::draw() {
         formatPercentage(_batteryLevel),
         Point((bounds().width() - BATTERY_HEAD_WIDTH - 3) / 2, bounds().height() / 2));
   }
-  _drawingContext->commit(frame().origin());
 }
