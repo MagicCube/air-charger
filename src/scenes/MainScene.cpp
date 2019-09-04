@@ -29,8 +29,10 @@ bool MainScene::update(bool forceRedraw) {
 
 void MainScene::redraw() {
   _animation.redraw();
+
   _clockView.redraw(true);   // Always force to redraw
   _batteryView.redraw(true); // Always force redraw
+
   _drawChargingIndicator();
 
   Screen.drawConstructionLines();
