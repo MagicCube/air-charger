@@ -11,6 +11,10 @@
 
 class DrawingContext {
 public:
+  // Size
+  Rect bounds();
+  Size size();
+
   // Lifecycle
   virtual void alloc() = 0;
   virtual void free() = 0;
