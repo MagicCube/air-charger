@@ -4,11 +4,10 @@
 
 #include <TFT_eSPI.h>
 
-#include "settings/Settings.h"
 #include "ble/BLEPeripheral.h"
-#include "timing/DateTime.h"
-#include "displaying/Screen.h"
 #include "charging/Charger.h"
+#include "displaying/Screen.h"
+#include "settings/Settings.h"
 
 #include "scenes/ConnectScene.h"
 #include "scenes/MainScene.h"
