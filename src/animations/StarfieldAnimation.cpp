@@ -14,24 +14,26 @@ void StarfieldAnimation::redraw() {
 
   for (uint8_t i = 0; i < NSTARS; ++i) {
     if (sz[i] <= 1) {
-      sx[i] = TFT_WIDTH / 2 - TFT_HEIGHT / 2 + _rng();
+      sx[i] = Screen.size().width / 2 - Screen.size().height / 2 + _rng();
       sy[i] = _rng();
       sz[i] = spawnDepthVariation--;
     } else {
       int last_x = _xScale(sx[i], sz[i]);
       int last_y = _yScale(sy[i], sz[i]);
+      Point point(last_x, last_y);
 
       // This is a faster pixel drawing function for occassions where many single pixels must be
       // drawn
-      _drawStar(last_x, last_y, sz[i], TFT_BLACK);
+      _drawStar(point, sz[i], TFT_BLACK);
 
       sz[i] -= 2;
       if (sz[i] > 1) {
         int x = _xScale(sx[i], sz[i]);
         int y = _yScale(sy[i], sz[i]);
+        Point point(x, y);
 
-        if (_shouldDrawStar(x, y)) {
-          _drawStar(x, y, sz[i], _colorScale(sz[i]));
+        if (_shouldDrawStar(point)) {
+          _drawStar(point, sz[i], _colorScale(sz[i]));
         } else {
           sz[i] = 0; // Out of screen, die.
         }
@@ -40,16 +42,16 @@ void StarfieldAnimation::redraw() {
   }
 }
 
-bool StarfieldAnimation::_shouldDrawStar(int x, int y) {
-  if (x >= 0 && y >= 0 && x < TFT_WIDTH && y < TFT_HEIGHT) {
+bool StarfieldAnimation::_shouldDrawStar(Point position) {
+  if (Screen.bounds().contains(position)) {
     return true;
   }
   return false;
 }
 
-void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color) {
+void StarfieldAnimation::_drawStar(Point position, uint8_t z, uint32_t color) {
   auto context = Screen.drawingContext();
-  context->fillCircle(Point(x, y), _zScale(z), color);
+  context->fillCircle(position, _zScale(z), color);
 }
 
 uint8_t StarfieldAnimation::_rng() {
@@ -61,11 +63,11 @@ uint8_t StarfieldAnimation::_rng() {
 }
 
 int StarfieldAnimation::_xScale(uint8_t x, uint8_t z) {
-  return ((int)x - TFT_WIDTH / 2) * 256 / z + TFT_WIDTH / 2;
+  return ((int)x - Screen.size().width / 2) * 256 / z + Screen.size().width / 2;
 }
 
 int StarfieldAnimation::_yScale(uint8_t y, uint8_t z) {
-  return ((int)y - TFT_HEIGHT / 2) * 256 / z + TFT_HEIGHT / 2;
+  return ((int)y - Screen.size().height / 2) * 256 / z + Screen.size().height / 2;
 }
 
 int StarfieldAnimation::_zScale(uint8_t z) {

@@ -5,6 +5,7 @@
 #include <TFT_eSPI.h>
 
 #include "../conf.h"
+#include "../drawing/Rect.h"
 
 #define MAX_STAR_SIZE 5
 
@@ -20,8 +21,8 @@ private:
   uint8_t sz[NSTARS] = {};
   unsigned long _lastUpdate = 0;
 
-  bool _shouldDrawStar(int x, int y);
-  void _drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color);
+  bool _shouldDrawStar(Point position);
+  void _drawStar(Point position, uint8_t z, uint32_t color);
   uint8_t _rng();
   int _xScale(uint8_t x, uint8_t z);
   int _yScale(uint8_t y, uint8_t z);
