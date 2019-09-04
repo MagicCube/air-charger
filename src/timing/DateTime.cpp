@@ -32,31 +32,31 @@ time_t DateTime::now() {
   return __currentTimeOffsetTicks + millis() / 1000;
 }
 
-int DateTime::getFullYear() {
+int DateTime::fullYear() {
   return _localTime->tm_year + 1900;
 }
 
-int DateTime::getMonth() {
+int DateTime::month() {
   return _localTime->tm_mon;
 }
 
-int DateTime::getDate() {
+int DateTime::date() {
   return _localTime->tm_mday;
 }
 
-int DateTime::getDay() {
+int DateTime::day() {
   return _localTime->tm_wday;
 }
 
-int DateTime::getHours() {
+int DateTime::hours() {
   return _localTime->tm_hour;
 }
 
-int DateTime::getMinutes() {
+int DateTime::minutes() {
   return _localTime->tm_min;
 }
 
-int DateTime::getSeconds() {
+int DateTime::seconds() {
   return _localTime->tm_sec;
 }
 

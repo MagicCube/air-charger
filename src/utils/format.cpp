@@ -9,21 +9,21 @@ String formatPercentage(int percentage) {
 String formatTime(DateTime dateTime, bool includingSeconds) {
   char result[10];
   auto *format = includingSeconds ? "%02d:%02d:%02d" : "%02d : %02d";
-  sprintf(result, format, dateTime.getHours(), dateTime.getMinutes(), dateTime.getSeconds());
+  sprintf(result, format, dateTime.hours(), dateTime.minutes(), dateTime.seconds());
   return String(result);
 }
 
 String formatDate(DateTime dateTime) {
   char result[12];
-  sprintf(result, "%d-%02d-%02d", dateTime.getFullYear(), dateTime.getMonth() + 1,
-          dateTime.getDate());
+  sprintf(result, "%d-%02d-%02d", dateTime.fullYear(), dateTime.month() + 1,
+          dateTime.date());
   return String(result);
 }
 
 String formatDateTime(DateTime dateTime) {
   char result[24];
-  sprintf(result, "%d-%02d-%02d %02d:%02d:%02d", dateTime.getFullYear(), dateTime.getMonth() + 1,
-          dateTime.getDate(), dateTime.getHours(), dateTime.getMinutes(), dateTime.getSeconds());
+  sprintf(result, "%d-%02d-%02d %02d:%02d:%02d", dateTime.fullYear(), dateTime.month() + 1,
+          dateTime.date(), dateTime.hours(), dateTime.minutes(), dateTime.seconds());
   return String(result);
 }
 

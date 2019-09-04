@@ -11,13 +11,13 @@ public:
 
   static void configTime(DateTime time);
   static time_t now();
-  int getFullYear();
-  int getMonth();
-  int getDate();
-  int getDay();
-  int getHours();
-  int getMinutes();
-  int getSeconds();
+  int fullYear();
+  int month();
+  int date();
+  int day();
+  int hours();
+  int minutes();
+  int seconds();
   time_t gmtTime();
 
 private:
