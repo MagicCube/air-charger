@@ -64,6 +64,10 @@ public:
     return Point(left() + width() / 2, top() + height() / 2);
   }
 
+  bool contains(Point point) {
+    return point.x >= left() && point.x <= right() && point.y >= top() && point.y <= bottom();
+  }
+
 private:
   Point _origin;
   Size _size;
