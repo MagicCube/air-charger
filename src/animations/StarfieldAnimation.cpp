@@ -33,7 +33,7 @@ void StarfieldAnimation::redraw() {
         int x = _xScale(sx[i], sz[i]);
         int y = _yScale(sy[i], sz[i]);
 
-        if (_isInScreen(x, y)) {
+        if (_shouldDrawStar(x, y)) {
           _drawStar(x, y, sz[i], _colorScale(sz[i]));
         } else {
           sz[i] = 0; // Out of screen, die.
@@ -43,8 +43,11 @@ void StarfieldAnimation::redraw() {
   }
 }
 
-bool StarfieldAnimation::_isInScreen(int x, int y) {
-  return x >= 0 && y >= 0 && x < TFT_WIDTH && y < TFT_HEIGHT;
+bool StarfieldAnimation::_shouldDrawStar(int x, int y) {
+  if (x >= 0 && y >= 0 && x < TFT_WIDTH && y < TFT_HEIGHT) {
+    return true;
+  }
+  return false;
 }
 
 void StarfieldAnimation::_drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color) {

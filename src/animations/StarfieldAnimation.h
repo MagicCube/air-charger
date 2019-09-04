@@ -21,7 +21,7 @@ private:
   uint8_t sz[NSTARS] = {};
   unsigned long _lastUpdate = 0;
 
-  bool _isInScreen(int x, int y);
+  bool _shouldDrawStar(int x, int y);
   void _drawStar(uint8_t x, uint8_t y, uint8_t z, uint32_t color);
   uint8_t _rng();
   int _xScale(uint8_t x, uint8_t z);
