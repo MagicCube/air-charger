@@ -15,7 +15,7 @@ void AirChargerClass::begin(String deviceName) {
   BLEPeripheral.begin(deviceName);
 
   if (AirChargerSettings.hasClientAddress()) {
-    BLEPeripheral.startScanningMode(AirChargerSettings.getClientAddress());
+    BLEPeripheral.startScanningMode(AirChargerSettings.clientAddress());
   } else {
     Display.showMessage("Paring...");
     Display.showMessage(DEVICE_NAME);
@@ -42,7 +42,7 @@ uint16_t AirChargerClass::update() {
 
 void AirChargerClass::_checkConnection() {
   if (BLEPeripheral.state() == BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT) {
-    BLEPeripheral.connectRemoteDevice(AirChargerSettings.getClientAddress());
+    BLEPeripheral.connectRemoteDevice(AirChargerSettings.clientAddress());
   } else if (BLEPeripheral.state() == BLEPeripheralState::SCANNING) {
     BLEPeripheral.continueSearching();
   }

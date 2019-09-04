@@ -83,7 +83,7 @@ void BLEParingServer::stopAdvertising() {
 void BLEParingServer::onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param) {
   LOG_I("A new client [%s] has been paired.", formatBLEAddress(param->connect.remote_bda).c_str());
   LOG_I("Saving paired client address...");
-  AirChargerSettings.setClientAddress((ble_address_t)(param->connect.remote_bda));
+  AirChargerSettings.clientAddress((ble_address_t)(param->connect.remote_bda));
   AirChargerSettings.save();
 }
 

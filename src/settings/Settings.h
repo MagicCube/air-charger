@@ -10,8 +10,8 @@ public:
   void begin();
 
   bool hasClientAddress();
-  ble_address_t getClientAddress();
-  void setClientAddress(ble_address_t address);
+  ble_address_t clientAddress();
+  void clientAddress(ble_address_t value);
 
   void save();
 

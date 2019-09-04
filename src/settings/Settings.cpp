@@ -25,15 +25,15 @@ bool Settings::hasClientAddress() {
   return _hasClientAddress;
 }
 
-ble_address_t Settings::getClientAddress() {
+ble_address_t Settings::clientAddress() {
   return _clientAddress;
 }
 
-void Settings::setClientAddress(ble_address_t address) {
+void Settings::clientAddress(ble_address_t value) {
   LOG_D("[EEPROM] sets client address.");
   _touch();
   for (int i = 0; i < 6; i++) {
-    EEPROM.write(i + 1, address[i]);
+    EEPROM.write(i + 1, value[i]);
   }
   _hasClientAddress = true;
 }
