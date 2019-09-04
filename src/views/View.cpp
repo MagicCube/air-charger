@@ -30,21 +30,12 @@ void View::setNeedsRedraw() {
   _needsRedraw = true;
 }
 
-unsigned long View::elapsedSinceLastRedraw() {
-  return millis() - lastRedrawTime();
-}
-
-unsigned long View::lastRedrawTime() {
-  return _lastRedrawTime;
-}
-
 void View::redraw(bool force) {
   if (force || needsRedraw()) {
     draw();
   }
   _needsRedraw = false;
   _hasChanged = false;
-  _lastRedrawTime = millis();
 }
 
 void View::draw() {

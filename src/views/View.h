@@ -18,8 +18,6 @@ protected:
   void setNeedsRedraw();
   bool hasChanged();
   void markAsChanged();
-  unsigned long lastRedrawTime();
-  unsigned long elapsedSinceLastRedraw();
 
   virtual void draw() = 0;
 
@@ -28,5 +26,4 @@ private:
   Rect _bounds;
   bool _needsRedraw = true;
   bool _hasChanged = false;
-  unsigned long _lastRedrawTime = 0;
 };
