@@ -1,6 +1,6 @@
 #include "ClockView.h"
 
-ClockView::ClockView() : View(Rect((TFT_WIDTH - CLOCK_WIDTH) / 2, 40, CLOCK_WIDTH, CLOCK_HEIGHT)) {
+ClockView::ClockView() : View(Rect((TFT_WIDTH - CLOCK_WIDTH) / 2, 42, CLOCK_WIDTH, CLOCK_HEIGHT)) {
 }
 
 String ClockView::timeString() {
