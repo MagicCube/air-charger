@@ -6,7 +6,7 @@ TFTDrawingContext::TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, 
                                      uint8_t colorDepth) {
   _tft = tft;
   _type = type;
-  _size = size;
+  _bounds = Rect(0, 0, size);
   _colorDepth = colorDepth;
 }
 
@@ -18,7 +18,7 @@ void TFTDrawingContext::commit(Point position) {
 
 void TFTDrawingContext::alloc() {
   if (_type == TFTDrawingContextType::SPRITE) {
-    ((TFT_eSprite *)_tft)->createSprite(_size.width, _size.height);
+    ((TFT_eSprite *)_tft)->createSprite(size().width, size().height);
   }
 }
 
@@ -36,16 +36,12 @@ void TFTDrawingContext::fill(color_t color) {
   }
 }
 
+Rect TFTDrawingContext::bounds() {
+  return _bounds;
+}
+
 Size TFTDrawingContext::size() {
-  return Size(_tft->width(), _tft->height());
-}
-
-int16_t TFTDrawingContext::width() {
-  return _tft->width();
-}
-
-int16_t TFTDrawingContext::height() {
-  return _tft->height();
+  return _bounds.size();
 }
 
 void TFTDrawingContext::drawPixel(Point position, color_t color) {

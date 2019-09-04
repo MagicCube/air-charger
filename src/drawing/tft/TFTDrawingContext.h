@@ -12,19 +12,18 @@ enum class TFTDrawingContextType {
 
 class TFTDrawingContext : public DrawingContext {
 public:
-  TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, Size size = Size(TFT_WIDTH, TFT_HEIGHT), uint8_t colorDepth = 16);
+  TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, Size size, uint8_t colorDepth);
 
-  static TFTDrawingContext *createInMemory(TFT_eSPI *tft, Size size, uint8_t colorDepth = 16) {
+  static TFTDrawingContext *createInMemory(TFT_eSPI *tft, Size size, uint8_t colorDepth) {
     TFT_eSprite *sprite = new TFT_eSprite(tft);
     sprite->setColorDepth(colorDepth);
-    auto context = new TFTDrawingContext(sprite, TFTDrawingContextType::SPRITE, size);
+    auto context = new TFTDrawingContext(sprite, TFTDrawingContextType::SPRITE, size, colorDepth);
     return context;
   }
 
   // Size
+  Rect bounds();
   Size size();
-  int16_t width();
-  int16_t height();
 
   // Lifecycle
   void alloc();
@@ -56,5 +55,5 @@ private:
   TFT_eSPI *_tft;
   TFTDrawingContextType _type;
   uint8_t _colorDepth;
-  Size _size;
+  Rect _bounds;
 };
