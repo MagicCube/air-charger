@@ -18,6 +18,7 @@ public:
   TFT_eSPI *display();
 
   void clear();
+  void drawConstructionLines();
   void showSplash();
   void showMessage(String message);
 

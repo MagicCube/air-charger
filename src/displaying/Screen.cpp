@@ -31,11 +31,14 @@ TFT_eSPI *ScreenClass::display() {
 
 void ScreenClass::clear() {
   _tft.fillScreen(TFT_BLACK);
+  drawConstructionLines();
+}
 
-  #ifdef DRAW_CONSTRUCTION_LINE
+void ScreenClass::drawConstructionLines() {
+#ifdef DRAW_CONSTRUCTION_LINES
   auto s = size();
   _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, DRAW_CONSTRUCTION_LINE);
-  #endif
+#endif
 }
 
 void ScreenClass::showSplash() {
