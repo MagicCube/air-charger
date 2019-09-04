@@ -55,8 +55,6 @@ public:
   void onTime(DateTime time);
 
 private:
-  BLEPeripheralClass();
-
   String _deviceName;
   BLEPeripheralState _state = BLEPeripheralState::INITIALIZING;
   BLEPeripheralCallbacks *_callbacks;

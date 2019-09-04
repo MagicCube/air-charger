@@ -15,7 +15,6 @@ public:
   ChargingState state();
 
 private:
-  ChargerClass();
   ChargingState _state = ChargingState::CHARGING;
   // ChargingState _state = ChargingState::NOT_CHARGING;
 };
