@@ -12,7 +12,7 @@
 #define DEBUG
 
 // Comment the next line to disable drawing construction line.
-#define DRAW_CONSTRUCTION_LINE TFT_RED
+// #define DRAW_CONSTRUCTION_LINE TFT_RED
 
 #define FPS 30
 
