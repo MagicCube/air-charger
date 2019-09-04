@@ -4,11 +4,11 @@
 
 #include "Scene.h"
 
-#include "../../animations/StarfieldAnimation.h"
-#include "../../drawing/tft/TFTDrawingContext.h"
+#include "../animations/StarfieldAnimation.h"
+#include "../drawing/tft/TFTDrawingContext.h"
 
-#include "../../views/ClockView.h"
-#include "../../views/BatteryView.h"
+#include "../views/ClockView.h"
+#include "../views/BatteryView.h"
 
 class MainScene : public Scene {
 public:

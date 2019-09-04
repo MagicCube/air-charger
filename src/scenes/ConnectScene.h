@@ -4,7 +4,7 @@
 
 #include "Scene.h"
 
-#include "../../ble/BLEPeripheral.h"
+#include "../ble/BLEPeripheral.h"
 
 class ConnectScene : public Scene {
 public:

@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 
-#include "../../drawing/Rect.h"
+#include "../drawing/Rect.h"
 
 class Scene {
 public:

@@ -1,6 +1,6 @@
 #include "ConnectScene.h"
 
-#include "../../resources/bluetooth_logo.h"
+#include "../resources/bluetooth_logo.h"
 
 bool ConnectScene::update(bool forceRedraw) {
   BLEPeripheralState currentState = BLEPeripheral.state();

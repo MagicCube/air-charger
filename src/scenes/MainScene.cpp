@@ -2,12 +2,12 @@
 
 #include "log.h"
 
-#include "../../ble/BLEPeripheral.h"
-#include "../../charging/Charger.h"
-#include "../../displaying/Screen.h"
-#include "../../utils/format.h"
+#include "../ble/BLEPeripheral.h"
+#include "../charging/Charger.h"
+#include "../displaying/Screen.h"
+#include "../utils/format.h"
 
-#include "../../resources/charging_indicator.h"
+#include "../resources/charging_indicator.h"
 
 MainScene::MainScene() {
   _animation.setBlackHoles(_clockView.frame(), _batteryView.frame());

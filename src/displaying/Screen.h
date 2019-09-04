@@ -6,8 +6,8 @@
 #include "../ble/BLEPeripheral.h"
 #include "../drawing/tft/TFTDrawingContext.h"
 
-#include "scenes/ConnectScene.h"
-#include "scenes/MainScene.h"
+#include "../scenes/ConnectScene.h"
+#include "../scenes/MainScene.h"
 
 class ScreenClass {
 public:
