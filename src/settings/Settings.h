@@ -16,6 +16,7 @@ public:
   void save();
 
 private:
+  Settings();
   bool _hasClientAddress = false;
   uint8_t _clientAddress[6];
 

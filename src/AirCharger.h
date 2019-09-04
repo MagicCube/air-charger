@@ -28,6 +28,7 @@ public:
   void onRemoteDeviceTime(DateTime time);
 
 private:
+  AirChargerClass();
   unsigned long _lastUpdate = 0;
   Scene *_currentScene = nullptr;
   ConnectScene *_connectScene = nullptr;
