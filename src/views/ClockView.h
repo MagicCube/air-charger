@@ -6,7 +6,7 @@
 
 class ClockView : public View {
 public:
-  ClockView(Point position);
+  ClockView();
 
   String timeString();
   void timeString(String value);

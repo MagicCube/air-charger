@@ -37,7 +37,7 @@ void MainScene::_drawBackground() {
 
 void MainScene::_drawClock() {
   if (_clockView == nullptr) {
-    _clockView = new ClockView(Point((TFT_WIDTH - 160) / 2, 40));
+    _clockView = new ClockView();
   }
   auto now = DateTime::now();
   DateTime time(now);

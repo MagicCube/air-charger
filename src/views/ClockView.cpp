@@ -2,7 +2,7 @@
 
 #include "../displaying/Screen.h"
 
-ClockView::ClockView(Point position) : View(Rect(position, 160, 52)) {
+ClockView::ClockView() : View(Rect((TFT_WIDTH - 160) / 2, 40, 160, 52)) {
 }
 
 String ClockView::timeString() {
