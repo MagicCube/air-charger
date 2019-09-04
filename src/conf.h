@@ -11,6 +11,9 @@
 // Comment the next line to disable debug mode.
 #define DEBUG
 
+// Comment the next line to disable drawing construction line.
+#define DRAW_CONSTRUCTION_LINE TFT_RED
+
 #define FPS 30
 
 #define UPDATE_INTERVAL (1000 / FPS)
