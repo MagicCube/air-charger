@@ -30,6 +30,10 @@ void View::setNeedsRedraw() {
   _needsRedraw = true;
 }
 
+TFTDrawingContext *View::createDrawingContext(uint8_t colorDepth) {
+  return TFTDrawingContext::createDrawingContext(bounds().size(), 1);
+}
+
 void View::redraw(bool force) {
   if (force || needsRedraw()) {
     draw();

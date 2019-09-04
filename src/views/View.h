@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-#include "../drawing/rect.h"
+#include "../drawing/tft/TFTDrawingContext.h"
 
 class View {
 public:
@@ -18,6 +18,7 @@ protected:
   void setNeedsRedraw();
   bool hasChanged();
   void markAsChanged();
+  TFTDrawingContext *createDrawingContext(uint8_t colorDepth);
 
   virtual void draw() = 0;
 

@@ -16,7 +16,7 @@ class TFTDrawingContext : public DrawingContext {
 public:
   TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, Size size, uint8_t colorDepth);
 
-  static TFTDrawingContext *createInMemory(TFT_eSPI *tft, Size size, uint8_t colorDepth);
+  static TFTDrawingContext *createDrawingContext(Size size, uint8_t colorDepth);
   static TFTDrawingContext *getScreenDrawingContext();
 
   // Size

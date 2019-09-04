@@ -12,8 +12,9 @@ TFTDrawingContext::TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, 
   _colorDepth = colorDepth;
 }
 
-TFTDrawingContext *TFTDrawingContext::createInMemory(TFT_eSPI *tft, Size size, uint8_t colorDepth) {
-  TFT_eSprite *sprite = new TFT_eSprite(tft);
+TFTDrawingContext *TFTDrawingContext::createDrawingContext(Size size, uint8_t colorDepth) {
+  auto screen = ScreenClass::instance();
+  TFT_eSprite *sprite = new TFT_eSprite(screen->display());
   sprite->setColorDepth(colorDepth);
   auto context = new TFTDrawingContext(sprite, TFTDrawingContextType::SPRITE, size, colorDepth);
   return context;

@@ -4,8 +4,6 @@
 
 #include "../utils/format.h"
 
-#include "../displaying/Screen.h"
-
 BatteryView::BatteryView()
     : View(Rect((TFT_WIDTH - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128, 160, 60)) {
 }
@@ -32,7 +30,7 @@ void BatteryView::isCharging(bool value) {
 
 void BatteryView::draw() {
   if (_drawingContext == nullptr) {
-    _drawingContext = TFTDrawingContext::createInMemory(Screen.display(), bounds().size(), 8);
+    _drawingContext = createDrawingContext(8);
     _drawingContext->alloc();
   }
   if (hasChanged()) {
