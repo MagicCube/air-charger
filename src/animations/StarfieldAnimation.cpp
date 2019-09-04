@@ -35,13 +35,15 @@ void StarfieldAnimation::redraw() {
 
       // This is a faster pixel drawing function for occassions where many single pixels must be
       // drawn
-      _drawStar(point, sz[i], TFT_BLACK);
+      if (_shouldDrawStar(point)) {
+        _drawStar(point, sz[i], TFT_BLACK);
+      }
 
       sz[i] -= 2;
       if (sz[i] > 1) {
         int x = _xScale(sx[i], sz[i]);
         int y = _yScale(sy[i], sz[i]);
-        Point point(x, y);
+        point = Point(x, y);
 
         if (_shouldDrawStar(point)) {
           _drawStar(point, sz[i], _colorScale(sz[i]));
