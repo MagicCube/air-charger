@@ -35,7 +35,7 @@ void MainScene::redraw() {
 
   #ifdef DEBUG and DRAW_CONSTRUCTION_LINE
   auto context = TFTDrawingContext::getScreenDrawingContext();
-  context->drawCircle(context->bounds().middlePoint(), context->size().width / 2 - 1, DRAW_OUTLINE);
+  context->drawCircle(context->bounds().middlePoint(), context->size().width / 2 - 1, DRAW_CONSTRUCTION_LINE);
   #endif
 }
 

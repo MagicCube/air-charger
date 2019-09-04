@@ -34,7 +34,7 @@ void ScreenClass::clear() {
 
   #ifdef DEBUG and DRAW_CONSTRUCTION_LINE
   auto s = size();
-  _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, DRAW_OUTLINE);
+  _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, DRAW_CONSTRUCTION_LINE);
   #endif
 }
 
