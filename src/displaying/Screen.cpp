@@ -38,8 +38,8 @@ void ScreenClass::clear() {
 
 void ScreenClass::drawConstructionLines() {
 #ifdef DRAW_CONSTRUCTION_LINES
-  auto s = size();
-  _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, DRAW_CONSTRUCTION_LINES);
+  _tft.drawCircle(TFT_WIDTH / 2, TFT_WIDTH / 2, TFT_WIDTH / 2 - 1, DRAW_CONSTRUCTION_LINES);
+  // _tft.drawRect(0, 0, TFT_WIDTH, TFT_WIDTH, DRAW_CONSTRUCTION_LINES);
 #endif
 }
 
