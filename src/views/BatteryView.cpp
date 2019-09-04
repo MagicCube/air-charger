@@ -5,7 +5,7 @@
 #include "../utils/format.h"
 
 BatteryView::BatteryView()
-    : View(Rect((TFT_WIDTH - 150) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128, 160, 60)) {
+    : View(Rect((TFT_WIDTH - BATTERY_WIDTH) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128, BATTERY_WIDTH, BATTERY_HEIGHT)) {
 }
 
 uint8_t BatteryView::batteryLevel() {
@@ -35,17 +35,16 @@ void BatteryView::draw() {
   }
   if (hasChanged()) {
     _drawingContext->fill(TFT_BLACK);
-    _drawingContext->drawRoundRect(
-        Rect(0, 0, bounds().width() - BATTERY_HEAD_WIDTH - 3, bounds().height()),
-        BATTERY_HEAD_WIDTH, TFT_WHITE);
+    _drawingContext->drawRoundRect(Rect(0, 0, size().width - BATTERY_HEAD_WIDTH - 3, size().height),
+                                   BATTERY_HEAD_WIDTH, TFT_WHITE);
 
-    int headHeight = bounds().height() / 2;
-    _drawingContext->fillRoundRect(Rect(bounds().width() - BATTERY_HEAD_WIDTH,
-                                        (bounds().height() - headHeight) / 2, BATTERY_HEAD_WIDTH,
+    int headHeight = size().height / 2;
+    _drawingContext->fillRoundRect(Rect(size().width - BATTERY_HEAD_WIDTH,
+                                        (size().height - headHeight) / 2, BATTERY_HEAD_WIDTH,
                                         headHeight),
                                    BATTERY_ROUNDNESS, TFT_WHITE);
 
-    int batteryWidth = ((float)(bounds().width() - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
+    int batteryWidth = ((float)(size().width - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3)) *
                        ((float)_batteryLevel / 100);
     auto batteryColor = _isCharging ? TFT_DARKGREEN : TFT_GREY;
     if (_batteryLevel <= 10) {
@@ -54,9 +53,9 @@ void BatteryView::draw() {
       batteryColor = TFT_ORANGE;
     }
     auto batteryTextColor = TFT_WHITE;
-    _drawingContext->fillRect(Rect(BATTERY_PADDING, BATTERY_PADDING, batteryWidth,
-                                   bounds().height() - BATTERY_PADDING * 2),
-                              batteryColor);
+    _drawingContext->fillRect(
+        Rect(BATTERY_PADDING, BATTERY_PADDING, batteryWidth, size().height - BATTERY_PADDING * 2),
+        batteryColor);
 
     _drawingContext->setTextColor(batteryTextColor);
     _drawingContext->setFreeFont(&FreeSansBold18pt7b);
@@ -64,7 +63,7 @@ void BatteryView::draw() {
     _drawingContext->setTextAlign(CC_DATUM);
     _drawingContext->drawString(
         formatPercentage(_batteryLevel),
-        Point((bounds().width() - BATTERY_HEAD_WIDTH - 3) / 2, bounds().height() / 2));
+        Point((size().width - BATTERY_HEAD_WIDTH - 3) / 2, size().height / 2));
   }
   _drawingContext->commit(frame().origin());
 }

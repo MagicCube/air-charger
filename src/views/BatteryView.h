@@ -6,6 +6,8 @@
 
 #include "../drawing/tft/TFTDrawingContext.h"
 
+#define BATTERY_WIDTH 160
+#define BATTERY_HEIGHT 60
 #define BATTERY_HEAD_WIDTH 6
 #define BATTERY_ROUNDNESS 4
 #define BATTERY_PADDING 5
