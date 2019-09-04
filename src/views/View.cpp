@@ -31,7 +31,7 @@ void View::setNeedsRedraw() {
 }
 
 TFTDrawingContext *View::createDrawingContext(uint8_t colorDepth) {
-  return TFTDrawingContext::createDrawingContext(bounds().size(), 1);
+  return TFTDrawingContext::createDrawingContext(bounds().size(), colorDepth);
 }
 
 void View::redraw(bool force) {
