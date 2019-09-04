@@ -2,6 +2,8 @@
 
 static ScreenClass *__instance;
 
+#include "conf.h"
+
 ScreenClass::ScreenClass() {
   __instance = this;
 }
@@ -37,7 +39,7 @@ void ScreenClass::clear() {
 void ScreenClass::drawConstructionLines() {
 #ifdef DRAW_CONSTRUCTION_LINES
   auto s = size();
-  _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, DRAW_CONSTRUCTION_LINE);
+  _tft.drawCircle(s.width / 2, s.height / 2, s.width / 2 - 1, DRAW_CONSTRUCTION_LINES);
 #endif
 }
 
