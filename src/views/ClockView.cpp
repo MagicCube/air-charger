@@ -1,6 +1,6 @@
 #include "ClockView.h"
 
-#include "../displaying/Screen.h";
+#include "../displaying/Screen.h"
 
 ClockView::ClockView(Point position) : View(Rect(position, 160, 52)) {
 }
