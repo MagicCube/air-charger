@@ -1,7 +1,5 @@
 #include "Screen.h"
 
-#include "log.h"
-
 static ScreenClass *__instance;
 
 ScreenClass::ScreenClass() {
