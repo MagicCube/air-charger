@@ -2,11 +2,15 @@
 
 View::View(Rect frame) {
   _frame = frame;
-  _bounds = Rect(0, 0, frame.size());
+  _bounds = Rect(0, 0, size());
 }
 
 Rect View::frame() {
   return _frame;
+}
+
+Size View::size() {
+  return _bounds.size();
 }
 
 Rect View::bounds() {

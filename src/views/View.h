@@ -10,6 +10,7 @@ public:
 
   Rect frame();
   Rect bounds();
+  Size size();
 
   void redraw(bool force = false);
 
