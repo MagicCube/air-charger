@@ -67,7 +67,7 @@ void AirChargerClass::_updateScene(bool forceUpdate) {
   }
   if (_currentScene != nullptr) {
     if (_currentScene->update(false)) {
-      _currentScene->redraw(Screen.display());
+      _currentScene->redraw();
     }
   }
 }

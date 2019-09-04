@@ -9,7 +9,7 @@
 class ConnectScene : public Scene {
 public:
   bool update(bool forceRedraw);
-  void redraw(TFT_eSPI *canvas);
+  void redraw();
 
 private:
   BLEPeripheralState _lastState = BLEPeripheralState::INITIALIZING;
