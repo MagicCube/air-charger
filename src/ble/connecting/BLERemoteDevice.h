@@ -27,7 +27,7 @@ public:
   void begin();
 
   uint8_t batteryLevel();
-  void setBatteryLevel(uint8_t batteryLevel);
+  void batteryLevel(uint8_t batteryLevel);
   void setCallbacks(BLERemoteDeviceCallbacks *callbacks);
 
   void connect(ble_address_t address);

@@ -25,7 +25,7 @@ uint8_t BLERemoteDevice::batteryLevel() {
   return _batteryLevel;
 }
 
-void BLERemoteDevice::setBatteryLevel(uint8_t batteryLevel) {
+void BLERemoteDevice::batteryLevel(uint8_t batteryLevel) {
   if (_batteryLevel != batteryLevel) {
     _batteryLevel = batteryLevel;
     if (_callbacks) {
@@ -47,7 +47,7 @@ void BLERemoteDevice::connect(ble_address_t address) {
     auto batteryLevelChar = batteryService->getCharacteristic(BATTERY_LEVEL_CHAR_UUID);
     if (batteryLevelChar != nullptr) {
       LOG_D("Readding battery level...");
-      setBatteryLevel(batteryLevelChar->readUInt8());
+      batteryLevel(batteryLevelChar->readUInt8());
     }
     if (batteryLevelChar->canNotify()) {
       LOG_D("Subscribing battery level characteristic...");
@@ -94,6 +94,6 @@ static void __batteryLevelNotifyCallback(BLERemoteCharacteristic *remoteChar, ui
                                          size_t length, bool isNotify) {
   if (isNotify && length == 1) {
     LOG_D("Battery level changing notification received.");
-    __instance->setBatteryLevel(data[0]);
+    __instance->batteryLevel(data[0]);
   }
 }
