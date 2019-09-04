@@ -1,6 +1,6 @@
 #include "ConnectScene.h"
 
-#include "../displaying/Screen.h"
+#include "../drawing/tft/TFTDrawingContext.h"
 
 #include "../resources/bluetooth_logo.h"
 
@@ -32,16 +32,16 @@ void ConnectScene::redraw() {
     break;
   }
 
-  auto canvas = Screen.drawingContext();
-  int32_t screenWidth = Screen.size().width;
+  auto context = TFTDrawingContext::getScreenDrawingContext();
+  int32_t screenWidth = context->size().width;
   Screen.clear();
-  canvas->drawXBitmap(
+  context->drawXBitmap(
       bluetooth_logo_bits,
       Rect((screenWidth - bluetooth_logo_width) / 2, 40, bluetooth_logo_width, bluetooth_logo_height),
       TFT_BLUE);
-  canvas->setTextColor(TFT_WHITE);
-  canvas->setFont(4);
-  canvas->setFontSize(1);
-  canvas->setTextAlign(CC_DATUM);
-  canvas->drawString(stateStr, Point(screenWidth / 2, 40 + bluetooth_logo_height + 40));
+  context->setTextColor(TFT_WHITE);
+  context->setFont(4);
+  context->setFontSize(1);
+  context->setTextAlign(CC_DATUM);
+  context->drawString(stateStr, Point(screenWidth / 2, 40 + bluetooth_logo_height + 40));
 }

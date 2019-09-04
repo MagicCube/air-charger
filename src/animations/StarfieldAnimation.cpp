@@ -1,6 +1,6 @@
 #include "StarfieldAnimation.h"
 
-#include "../displaying/Screen.h"
+#include "../drawing/tft/TFTDrawingContext.h"
 
 #define BLACK_HOLE_SPACING 3
 
@@ -63,7 +63,7 @@ bool StarfieldAnimation::_shouldDrawStar(Point position) {
 }
 
 void StarfieldAnimation::_drawStar(Point position, uint8_t z, uint32_t color) {
-  auto context = Screen.drawingContext();
+  auto context = TFTDrawingContext::getScreenDrawingContext();
   context->fillCircle(position, _zScale(z), color);
 }
 

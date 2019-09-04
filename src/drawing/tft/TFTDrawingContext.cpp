@@ -2,12 +2,30 @@
 
 #include <typeinfo>
 
+static TFTDrawingContext *__screenDrawingContext = nullptr;
+
 TFTDrawingContext::TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, Size size,
                                      uint8_t colorDepth) {
   _tft = tft;
   _type = type;
   _bounds = Rect(0, 0, size);
   _colorDepth = colorDepth;
+}
+
+TFTDrawingContext *TFTDrawingContext::createInMemory(TFT_eSPI *tft, Size size, uint8_t colorDepth) {
+  TFT_eSprite *sprite = new TFT_eSprite(tft);
+  sprite->setColorDepth(colorDepth);
+  auto context = new TFTDrawingContext(sprite, TFTDrawingContextType::SPRITE, size, colorDepth);
+  return context;
+}
+
+TFTDrawingContext *TFTDrawingContext::getScreenDrawingContext() {
+  if (__screenDrawingContext == nullptr) {
+    auto screen = ScreenClass::instance();
+    __screenDrawingContext =
+        new TFTDrawingContext(screen->display(), TFTDrawingContextType::SCREEN, screen->size(), 16);
+  }
+  return __screenDrawingContext;
 }
 
 void TFTDrawingContext::commit(Point position) {

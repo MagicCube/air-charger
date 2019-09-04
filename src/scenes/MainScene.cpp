@@ -4,7 +4,7 @@
 
 #include "../ble/BLEPeripheral.h"
 #include "../charging/Charger.h"
-#include "../displaying/Screen.h"
+#include "../drawing/tft/TFTDrawingContext.h"
 #include "../utils/format.h"
 
 #include "../resources/charging_indicator.h"
@@ -35,7 +35,7 @@ void MainScene::redraw() {
 }
 
 void MainScene::_drawChargingIndicator() {
-  auto context = Screen.drawingContext();
+  auto context = TFTDrawingContext::getScreenDrawingContext();
   if (Charger.isCharging()) {
     context->drawXBitmap(charging_indicator_bits,
                          Rect(_chargingIndicatorFrame.left(), _chargingIndicatorFrame.top(),

@@ -2,6 +2,16 @@
 
 #include "log.h"
 
+static ScreenClass *__instance;
+
+ScreenClass::ScreenClass() {
+  __instance = this;
+}
+
+ScreenClass *ScreenClass::instance() {
+  return __instance;
+}
+
 void ScreenClass::begin() {
   _tft.init();
   _tft.setRotation(1);
@@ -19,13 +29,6 @@ Size ScreenClass::size() {
 
 TFT_eSPI *ScreenClass::display() {
   return &_tft;
-}
-
-TFTDrawingContext *ScreenClass::drawingContext() {
-  if (_drawingContext == nullptr) {
-    _drawingContext = new TFTDrawingContext(&_tft, TFTDrawingContextType::SCREEN, size(), 16);
-  }
-  return _drawingContext;
 }
 
 void ScreenClass::clear() {

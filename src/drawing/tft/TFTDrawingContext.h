@@ -5,6 +5,8 @@
 
 #include "../DrawingContext.h"
 
+#include "../../displaying/Screen.h"
+
 enum class TFTDrawingContextType {
   SCREEN,
   SPRITE
@@ -14,12 +16,8 @@ class TFTDrawingContext : public DrawingContext {
 public:
   TFTDrawingContext(TFT_eSPI *tft, TFTDrawingContextType type, Size size, uint8_t colorDepth);
 
-  static TFTDrawingContext *createInMemory(TFT_eSPI *tft, Size size, uint8_t colorDepth) {
-    TFT_eSprite *sprite = new TFT_eSprite(tft);
-    sprite->setColorDepth(colorDepth);
-    auto context = new TFTDrawingContext(sprite, TFTDrawingContextType::SPRITE, size, colorDepth);
-    return context;
-  }
+  static TFTDrawingContext *createInMemory(TFT_eSPI *tft, Size size, uint8_t colorDepth);
+  static TFTDrawingContext *getScreenDrawingContext();
 
   // Size
   Rect bounds();

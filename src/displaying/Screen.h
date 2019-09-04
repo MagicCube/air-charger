@@ -3,16 +3,19 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 
-#include "../drawing/tft/TFTDrawingContext.h"
+#include "../drawing/Rect.h"
 
 class ScreenClass {
 public:
+  ScreenClass();
+
+  static ScreenClass *instance();
+
   void begin();
 
   Size size();
   Rect bounds();
   TFT_eSPI *display();
-  TFTDrawingContext *drawingContext();
 
   void clear();
   void showSplash();
@@ -21,7 +24,6 @@ public:
 private:
   Rect _bounds = Rect(0, 0, TFT_WIDTH, TFT_HEIGHT);
   TFT_eSPI _tft;
-  TFTDrawingContext *_drawingContext = nullptr;
 };
 
 extern ScreenClass Screen;
