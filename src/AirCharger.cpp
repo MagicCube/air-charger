@@ -117,7 +117,7 @@ void AirChargerClass::onRemoteDeviceConnect() {
 
 void AirChargerClass::onRemoteDeviceDisconnect() {
   Screen.showMessage("Disconnected.");
-  reboot(600);
+  reboot(500);
 }
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {
