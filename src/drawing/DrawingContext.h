@@ -18,7 +18,7 @@ public:
   // Lifecycle
   virtual void alloc() = 0;
   virtual void free() = 0;
-  virtual void commit(Point position) = 0;
+  virtual void push(Point position) = 0;
 
   // Basic
   virtual void fill(color_t color) = 0;

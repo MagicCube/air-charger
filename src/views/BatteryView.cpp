@@ -65,5 +65,5 @@ void BatteryView::draw() {
         formatPercentage(_batteryLevel),
         Point((size().width - BATTERY_HEAD_WIDTH - 3) / 2, size().height / 2));
   }
-  _drawingContext->commit(frame().origin());
+  _drawingContext->push(frame().origin());
 }

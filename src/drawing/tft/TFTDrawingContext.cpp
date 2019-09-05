@@ -27,7 +27,7 @@ TFTDrawingContext *TFTDrawingContext::getScreenDrawingContext() {
   return __screenDrawingContext;
 }
 
-void TFTDrawingContext::commit(Point position) {
+void TFTDrawingContext::push(Point position) {
   if (_type == TFTDrawingContextType::SPRITE) {
     ((TFT_eSprite *)_tft)->pushSprite(position.x, position.y);
   }

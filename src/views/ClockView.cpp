@@ -27,5 +27,5 @@ void ClockView::draw() {
     _drawingContext->setTextAlign(CC_DATUM);
     _drawingContext->drawString(_timeString, bounds().middlePoint());
   }
-  _drawingContext->commit(frame().origin());
+  _drawingContext->push(frame().origin());
 }

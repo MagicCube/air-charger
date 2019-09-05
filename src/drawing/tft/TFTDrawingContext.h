@@ -26,7 +26,7 @@ public:
   // Lifecycle
   void alloc();
   void free();
-  void commit(Point position);
+  void push(Point position);
 
   // Basic
   void fill(color_t color);
