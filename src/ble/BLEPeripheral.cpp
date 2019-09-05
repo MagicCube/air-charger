@@ -24,7 +24,7 @@ void BLEPeripheralClass::state(BLEPeripheralState newState) {
   if (_state != newState) {
     _state = newState;
     if (_callbacks) {
-      _callbacks->onStateChanged();
+      _callbacks->onBLEStateChanged();
     }
   }
 }

@@ -20,8 +20,11 @@ public:
   // Event loop.
   uint16_t update();
 
+  Scene *currentScene();
+  void currentScene(Scene *scene);
+
   // Implements `BLEPeripheralCallbacks`.
-  void onStateChanged();
+  void onBLEStateChanged();
   void onRemoteDeviceConnect();
   void onRemoteDeviceDisconnect();
   void onRemoteDeviceBatteryLevelChanged();

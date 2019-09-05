@@ -40,6 +40,17 @@ uint16_t AirChargerClass::update() {
   return timeBudget;
 }
 
+Scene *AirChargerClass::currentScene() {
+  return _currentScene;
+}
+
+void AirChargerClass::currentScene(Scene *value) {
+  if (value != _currentScene) {
+    _currentScene = value;
+    Screen.clear();
+  }
+}
+
 void AirChargerClass::_updateScene(bool forceRedraw) {
   Scene *scene = nullptr;
   BLEPeripheralState currentState = BLEPeripheral.state();
@@ -61,13 +72,11 @@ void AirChargerClass::_updateScene(bool forceRedraw) {
   default:
     break;
   }
-  if (_currentScene != scene) {
-    Screen.clear();
-    _currentScene = scene;
-  }
-  if (_currentScene != nullptr) {
-    _currentScene->update();
-    _currentScene->redraw(forceRedraw);
+
+  if (scene != nullptr) {
+    currentScene(scene);
+    currentScene()->update();
+    currentScene()->redraw(forceRedraw);
   }
 }
 
@@ -79,7 +88,7 @@ void AirChargerClass::_updateConnection() {
   }
 }
 
-void AirChargerClass::onStateChanged() {
+void AirChargerClass::onBLEStateChanged() {
   _updateScene(true);
 }
 
