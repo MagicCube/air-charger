@@ -7,7 +7,7 @@
 #include "../utils/format.h"
 
 BatteryView::BatteryView()
-    : View(Rect((TFT_WIDTH - BATTERY_WIDTH) / 2 + BATTERY_HEAD_WIDTH / 2 + 2, 128, BATTERY_WIDTH,
+    : View(Rect((TFT_WIDTH - BATTERY_WIDTH) / 2 + BATTERY_HEAD_WIDTH / 2, 128, BATTERY_WIDTH,
                 BATTERY_HEIGHT)) {
 }
 
