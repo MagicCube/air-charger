@@ -2,8 +2,11 @@
 
 #include <Arduino.h>
 
-class Scene {
+#include "../displaying/Screen.h"
+#include "../views/View.h"
+
+class Scene : public View {
 public:
-  virtual bool update(bool forceRedraw) = 0;
-  virtual void redraw() = 0;
+  Scene() : View(Screen.bounds()) {
+  }
 };

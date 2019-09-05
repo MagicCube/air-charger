@@ -11,8 +11,10 @@
 class MainScene : public Scene {
 public:
   MainScene();
-  bool update(bool forceRedraw);
-  void redraw();
+  void update();
+
+protected:
+  void draw();
 
 private:
   ClockView _clockView;

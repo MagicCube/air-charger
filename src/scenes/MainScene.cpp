@@ -9,14 +9,14 @@
 
 #include "../resources/charging_indicator.h"
 
-MainScene::MainScene() {
+MainScene::MainScene() : Scene() {
   _animation.setBlackHoles(_clockView.frame(), _batteryView.frame());
   _chargingIndicatorFrame =
       Rect(_batteryView.frame().left() - charging_indicator_width - 8,
            _batteryView.frame().top() + 8, charging_indicator_width, charging_indicator_height);
 }
 
-bool MainScene::update(bool forceRedraw) {
+void MainScene::update() {
   auto now = DateTime::now();
   DateTime time(now);
   if (now > 1000 * 60 * 60) {
@@ -24,14 +24,17 @@ bool MainScene::update(bool forceRedraw) {
   }
   _batteryView.batteryLevel(BLEPeripheral.remoteDevice()->batteryLevel());
   _batteryView.isCharging(Charger.isCharging());
-  return true;
+
+  // Always force to redraw.
+  // Don't worry, it won't.
+  setNeedsRedraw();
 }
 
-void MainScene::redraw() {
+void MainScene::draw() {
   _animation.redraw();
 
   _clockView.redraw(true);   // Always force to redraw
-  _batteryView.redraw(true); // Always force redraw
+  _batteryView.redraw(true); // Always force to redraw
 
   _drawChargingIndicator();
 
