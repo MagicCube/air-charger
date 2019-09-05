@@ -13,16 +13,17 @@ class ClockView : public View {
 public:
   ClockView();
 
-  String timeString();
-  void timeString(String value);
-
   void update();
 
 protected:
   void draw();
 
 private:
-  String _timeString = "-- : --";
+  unsigned long _lastUpdateTime = 0;
+  uint8_t _currentHours = 255;
+  uint8_t _currentMins = 255;
 
   TFTDrawingContext *_drawingContext = nullptr;
+
+  unsigned long _elapsedSinceLastUpdate();
 };

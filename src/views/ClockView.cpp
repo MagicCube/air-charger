@@ -7,22 +7,25 @@
 ClockView::ClockView() : View(Rect((TFT_WIDTH - CLOCK_WIDTH) / 2, 42, CLOCK_WIDTH, CLOCK_HEIGHT)) {
 }
 
-String ClockView::timeString() {
-  return _timeString;
-}
-
-void ClockView::timeString(String value) {
-  if (!value.equals(_timeString)) {
-    _timeString = value;
-    markAsChanged();
-  }
+unsigned long ClockView::_elapsedSinceLastUpdate() {
+  return millis() - _lastUpdateTime;
 }
 
 void ClockView::update() {
-  auto now = DateTime::now();
-  DateTime time(now);
-  if (now > 1000 * 60 * 60) {
-    timeString(formatTime(time, false));
+  if (_elapsedSinceLastUpdate() >= 1000) {
+    auto now = DateTime::now();
+    if (now > 1000 * 60 * 60) {
+      DateTime time(now);
+      if (_currentHours != time.hours()) {
+        _currentHours = time.hours();
+        markAsChanged();
+      }
+      if (_currentMins != time.minutes()) {
+        _currentMins = time.minutes();
+        markAsChanged();
+      }
+      _lastUpdateTime = millis();
+    }
   }
 }
 
@@ -32,13 +35,15 @@ void ClockView::draw() {
     _drawingContext->alloc();
   }
   if (hasChanged()) {
-    LOG_D("Drawing ClockView %s", _timeString.c_str());
+    char timeString[8];
+    sprintf(timeString, "%02d : %02d", _currentHours, _currentMins);
+    LOG_D("Drawing ClockView %02d:%02d", _currentHours, _currentMins);
     _drawingContext->fill(TFT_BLACK);
     _drawingContext->setTextColor(TFT_WHITE);
     _drawingContext->setFont(7);
     _drawingContext->setFontSize(1);
     _drawingContext->setTextAlign(CC_DATUM);
-    _drawingContext->drawString(_timeString, bounds().middlePoint());
+    _drawingContext->drawString(timeString, bounds().middlePoint());
   }
   _drawingContext->push(frame().origin());
 }
