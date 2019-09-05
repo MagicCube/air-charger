@@ -21,17 +21,8 @@ bool View::hasChanged() {
   return _hasChanged;
 }
 
-void View::markAsChanged() {
-  _hasChanged = true;
-  needsRedraw();
-}
-
 bool View::needsRedraw() {
   return _needsRedraw;
-}
-
-void View::setNeedsRedraw() {
-  _needsRedraw = true;
 }
 
 void View::redraw(bool force) {
@@ -42,10 +33,17 @@ void View::redraw(bool force) {
   _hasChanged = false;
 }
 
-void View::update() {
+void View::markAsChanged() {
+  _hasChanged = true;
+  needsRedraw();
+}
 
+void View::setNeedsRedraw() {
+  _needsRedraw = true;
+}
+
+void View::update() {
 }
 
 void View::draw() {
-
 }
