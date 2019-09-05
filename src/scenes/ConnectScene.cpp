@@ -4,19 +4,15 @@
 
 #include "../resources/bluetooth_logo.h"
 
-bool ConnectScene::update(bool forceRedraw) {
+void ConnectScene::update() {
   BLEPeripheralState currentState = BLEPeripheral.state();
-  bool redraw = false;
-  if (forceRedraw) {
-    redraw = true;
-  } else if (_lastState != currentState) {
-    redraw = true;
+  if (_lastState != currentState) {
+    _lastState = currentState;
+    markAsChanged();
   }
-  _lastState = BLEPeripheral.state();
-  return redraw;
 }
 
-void ConnectScene::redraw() {
+void ConnectScene::draw() {
   BLEPeripheralState currentState = BLEPeripheral.state();
   String stateStr;
 

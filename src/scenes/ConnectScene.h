@@ -8,8 +8,10 @@
 
 class ConnectScene : public Scene {
 public:
-  bool update(bool forceRedraw);
-  void redraw();
+  void update();
+
+protected:
+  void draw();
 
 private:
   BLEPeripheralState _lastState = BLEPeripheralState::INITIALIZING;
