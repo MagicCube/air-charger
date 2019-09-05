@@ -1,4 +1,4 @@
-#include "BLEParingServer.h"
+#include "BLEPairingServer.h"
 
 #include "log.h"
 
@@ -7,10 +7,10 @@
 
 #include "KeyboardReportMap.h"
 
-void BLEParingServer::begin(String deviceName) {
+void BLEPairingServer::begin(String deviceName) {
   _deviceName = deviceName;
 
-  LOG_I("Initializing BLE paring server...");
+  LOG_I("Initializing BLE pairing server...");
   _server = BLEDevice::createServer();
   _server->setCallbacks(this);
 
@@ -53,12 +53,16 @@ void BLEParingServer::begin(String deviceName) {
   // Start HID service.
   _hid->startServices();
   LOG_D("HID service has been <STARTED>.");
-  LOG_I("BLE paring server has been <INITIALIZED>.");
+  LOG_I("BLE pairing server has been <INITIALIZED>.");
 
   startAdvertising();
 }
 
-void BLEParingServer::startAdvertising() {
+void BLEPairingServer::setCallbacks(BLEPairingCallbacks *callbacks) {
+  _callbacks = callbacks;
+}
+
+void BLEPairingServer::startAdvertising() {
   LOG_D("Starting BLE advertising...");
   BLEAdvertising *advertising = BLEDevice::getAdvertising();
   // Pretend to be an HID keyboard device.
@@ -71,27 +75,30 @@ void BLEParingServer::startAdvertising() {
   BLEDevice::startAdvertising();
   LOG_I("BLE advertising has been <STARTED>.");
   LOG_I("Search [%s] in your Bluetooth device list.", _deviceName.c_str());
-  LOG_I("Waiting for paring with new device...");
+  LOG_I("Waiting for pairing with new device...");
 }
 
-void BLEParingServer::stopAdvertising() {
+void BLEPairingServer::stopAdvertising() {
   LOG_D("Stopping advertising...");
   _server->getAdvertising()->stop();
   LOG_I("BLE advertising has been <STOPPED>.");
 }
 
-void BLEParingServer::onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param) {
+void BLEPairingServer::onConnect(BLEServer *server, esp_ble_gatts_cb_param_t *param) {
   LOG_I("A new client [%s] has been paired.", formatBLEAddress(param->connect.remote_bda).c_str());
   LOG_I("Saving paired client address...");
   AirChargerSettings.clientAddress((ble_address_t)(param->connect.remote_bda));
   AirChargerSettings.save();
+  if (_callbacks != nullptr) {
+    _callbacks->onPaired();
+  }
 }
 
-void BLEParingServer::onDisconnect(BLEServer *server) {
+void BLEPairingServer::onDisconnect(BLEServer *server) {
 }
 
 
-void BLEParingServer::_setAccessPermission(BLECharacteristic *characteristic) {
+void BLEPairingServer::_setAccessPermission(BLECharacteristic *characteristic) {
   characteristic->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED |
                                        ESP_GATT_PERM_WRITE_ENCRYPTED);
 
@@ -111,6 +118,6 @@ void BLEParingServer::_setAccessPermission(BLECharacteristic *characteristic) {
   }
 }
 
-void BLEParingServer::_setAccessPermission(BLEService *service, uint16_t uuid) {
+void BLEPairingServer::_setAccessPermission(BLEService *service, uint16_t uuid) {
   _setAccessPermission(service->getCharacteristic(BLEUUID(uuid)));
 }

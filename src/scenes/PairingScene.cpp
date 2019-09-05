@@ -1,10 +1,10 @@
-#include "ConnectScene.h"
+#include "PairingScene.h"
 
 #include "../drawing/tft/TFTDrawingContext.h"
 
 #include "../resources/bluetooth_logo.h"
 
-void ConnectScene::update() {
+void PairingScene::update() {
   BLEPeripheralState currentState = BLEPeripheral.state();
   if (_lastState != currentState) {
     _lastState = currentState;
@@ -12,17 +12,16 @@ void ConnectScene::update() {
   }
 }
 
-void ConnectScene::draw() {
+void PairingScene::draw() {
   BLEPeripheralState currentState = BLEPeripheral.state();
   String stateStr;
 
   switch (currentState) {
-  case BLEPeripheralState::SCANNING:
-    stateStr = "Scanning...";
+  case BLEPeripheralState::PAIRING:
+    stateStr = DEVICE_NAME;
     break;
-  case BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT:
-  case BLEPeripheralState::REMOTE_DEVICE_CONNECTING:
-    stateStr = "Connecting...";
+  case BLEPeripheralState::PAIRED:
+    stateStr = "Paired.";
     break;
   default:
     break;

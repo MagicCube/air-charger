@@ -5,11 +5,13 @@
 #include "../utils/format.h"
 #include "log.h"
 
+#define PAIRED_FLAG 200
+
 void Settings::begin() {
   LOG_I("Loading settings from EEPROM...");
   EEPROM.begin(7);
   LOG_D("Reading previous settings from EEPROM...");
-  if (EEPROM.read(0)) {
+  if (EEPROM.read(0) == PAIRED_FLAG) {
     bool _clientAddressAvailable = false;
     for (int i = 0; i < 6; i++) {
       _clientAddress[i] = EEPROM.read(i + 1);
@@ -51,7 +53,7 @@ void Settings::save() {
 }
 
 void Settings::_touch() {
-  EEPROM.write(0, 1);
+  EEPROM.write(0, PAIRED_FLAG);
 }
 
 Settings AirChargerSettings;

@@ -4,10 +4,17 @@
 #include <BLEDevice.h>
 #include <BLEHIDDevice.h>
 
-class BLEParingServer : BLEServerCallbacks {
+class BLEPairingCallbacks {
 public:
-  // Initializes the `BLEParingServer`.
+  virtual void onPaired() = 0;
+};
+
+class BLEPairingServer : BLEServerCallbacks {
+public:
+  // Initializes the `BLEPairingServer`.
   void begin(String deviceName);
+
+  void setCallbacks(BLEPairingCallbacks *callbacks);
 
   // Starts BLE advertising.
   void startAdvertising();
@@ -23,6 +30,8 @@ private:
   String _deviceName;
   BLEServer *_server;
   BLEHIDDevice *_hid;
+  BLEPairingCallbacks *_callbacks = nullptr;
+
   void _setAccessPermission(BLECharacteristic *characteristic);
   void _setAccessPermission(BLEService *service, uint16_t uuid);
 };

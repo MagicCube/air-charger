@@ -9,6 +9,7 @@
 
 #include "scenes/ConnectScene.h"
 #include "scenes/MainScene.h"
+#include "scenes/PairingScene.h"
 
 class AirChargerClass : BLEPeripheralCallbacks {
 public:
@@ -33,6 +34,7 @@ private:
   Scene *_currentScene = nullptr;
   ConnectScene *_connectScene = nullptr;
   MainScene *_mainScene = nullptr;
+  PairingScene *_pairingScene = nullptr;
 
   void _updateScene(bool forceRedraw = false);
   void _updateConnection();

@@ -1,7 +1,7 @@
 #include "BLEPeripheral.h"
 
-#include "log.h"
 #include "../utils/format.h"
+#include "log.h"
 
 void BLEPeripheralClass::begin(String deviceName) {
   _deviceName = deviceName;
@@ -37,14 +37,15 @@ void BLEPeripheralClass::setCallbacks(BLEPeripheralCallbacks *callbacks) {
   _callbacks = callbacks;
 }
 
-void BLEPeripheralClass::startParingMode() {
-  LOG_I("Starting in <PARING> mode...");
-  state(BLEPeripheralState::PARING);
+void BLEPeripheralClass::startPairingMode() {
+  LOG_I("Starting in <PAIRING> mode...");
+  state(BLEPeripheralState::PAIRING);
 #ifdef BLE_ENABLED
-  if (_paringServer == nullptr) {
-    _paringServer = new BLEParingServer();
+  if (_pairingServer == nullptr) {
+    _pairingServer = new BLEPairingServer();
+    _pairingServer->setCallbacks(this);
   }
-  _paringServer->begin(_deviceName);
+  _pairingServer->begin(_deviceName);
 #endif
 }
 
@@ -80,6 +81,10 @@ void BLEPeripheralClass::connectRemoteDevice(ble_address_t address) {
   }
   _remoteDevice->connect(address);
 #endif
+}
+
+void BLEPeripheralClass::onPaired() {
+  state(BLEPeripheralState::PAIRED);
 }
 
 void BLEPeripheralClass::onConnect() {
