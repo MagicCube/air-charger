@@ -47,4 +47,5 @@ void View::update() {
 }
 
 void View::draw() {
+
 }

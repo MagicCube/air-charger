@@ -12,7 +12,7 @@ public:
   Rect bounds();
   Size size();
 
-  void update();
+  virtual void update();
   void redraw(bool force = false);
 
 protected:
@@ -20,8 +20,8 @@ protected:
   void setNeedsRedraw();
   bool hasChanged();
   void markAsChanged();
+  virtual void draw();
 
-  virtual void draw() = 0;
 
 private:
   Rect _frame;
