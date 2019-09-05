@@ -15,4 +15,6 @@ protected:
 
 private:
   BLEPeripheralState _lastState = BLEPeripheralState::INITIALIZING;
+  unsigned long _lastStateChangedTime = 0;
+  bool _hibernate = false;
 };
