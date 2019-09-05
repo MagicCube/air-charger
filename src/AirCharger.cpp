@@ -40,7 +40,7 @@ uint16_t AirChargerClass::update() {
   return timeBudget;
 }
 
-void AirChargerClass::_updateScene(bool forceUpdate) {
+void AirChargerClass::_updateScene(bool forceRedraw) {
   Scene *scene = nullptr;
   BLEPeripheralState currentState = BLEPeripheral.state();
   switch (currentState) {
@@ -66,9 +66,8 @@ void AirChargerClass::_updateScene(bool forceUpdate) {
     _currentScene = scene;
   }
   if (_currentScene != nullptr) {
-    if (_currentScene->update(false)) {
-      _currentScene->redraw();
-    }
+    _currentScene->update();
+    _currentScene->redraw(forceRedraw);
   }
 }
 
@@ -88,12 +87,11 @@ void AirChargerClass::onRemoteDeviceConnect() {
 }
 
 void AirChargerClass::onRemoteDeviceDisconnect() {
-  Screen.showSplash();
   ESP.restart();
 }
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {
-  _updateScene(true);
+  // _updateScene(true);
 }
 
 void AirChargerClass::onRemoteDeviceTime(DateTime time) {
