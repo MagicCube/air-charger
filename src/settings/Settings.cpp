@@ -23,6 +23,7 @@ void Settings::begin() {
       _hasClientAddress = true;
     }
   }
+  EEPROM.end();
   if (_hasClientAddress) {
     LOG_D("Saved client address was found: [%s]", formatBLEAddress(_clientAddress).c_str());
   } else {
