@@ -16,8 +16,8 @@ public:
   // Initializes the `AirCharger` with given device name.
   void begin(String deviceName);
 
-  // Event loop.
   uint16_t update();
+  void reboot(uint16_t after = 0);
 
   Scene *currentScene();
   void currentScene(Scene *scene);
@@ -31,6 +31,8 @@ public:
 
 private:
   unsigned long _lastUpdate = 0;
+  unsigned long _readyToReboot = 0;
+
   Scene *_currentScene = nullptr;
   ConnectScene *_connectScene = nullptr;
   MainScene *_mainScene = nullptr;

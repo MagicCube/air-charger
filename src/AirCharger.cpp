@@ -38,6 +38,14 @@ uint16_t AirChargerClass::update() {
   return timeBudget;
 }
 
+void AirChargerClass::reboot(uint16_t after) {
+  if (after == 0) {
+    ESP.restart();
+  } else {
+    _readyToReboot = millis() + after;
+  }
+}
+
 Scene *AirChargerClass::currentScene() {
   return _currentScene;
 }
@@ -83,6 +91,10 @@ void AirChargerClass::_updateScene(bool forceRedraw) {
     currentScene()->update();
     currentScene()->redraw(forceRedraw);
   }
+
+  if (_readyToReboot > 0 && millis() >= _readyToReboot) {
+    ESP.restart();
+  }
 }
 
 void AirChargerClass::_updateConnection() {
@@ -95,13 +107,17 @@ void AirChargerClass::_updateConnection() {
 
 void AirChargerClass::onBLEStateChanged() {
   _updateScene(true);
+  if (BLEPeripheral.state() == BLEPeripheralState::PAIRED) {
+    reboot(5 * 1000);
+  }
 }
 
 void AirChargerClass::onRemoteDeviceConnect() {
 }
 
 void AirChargerClass::onRemoteDeviceDisconnect() {
-  ESP.restart();
+  Screen.showMessage("Disconnected.");
+  reboot(600);
 }
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {
