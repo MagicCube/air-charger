@@ -11,6 +11,11 @@ void AirChargerClass::begin(String deviceName) {
 
   AirChargerSettings.begin();
 
+  Screen.begin();
+  if (AirChargerSettings.rebootReason() == RebootReason::UNKNOWN) {
+    Screen.showSplash();
+  }
+
   BLEPeripheral.setCallbacks(this);
   BLEPeripheral.begin(deviceName);
 
@@ -38,12 +43,10 @@ uint16_t AirChargerClass::update() {
   return timeBudget;
 }
 
-void AirChargerClass::reboot(uint16_t after) {
-  if (after == 0) {
-    ESP.restart();
-  } else {
-    _readyToReboot = millis() + after;
-  }
+void AirChargerClass::reboot(RebootReason reason, uint16_t after) {
+  AirChargerSettings.rebootReason(reason);
+  AirChargerSettings.save();
+  _readyToReboot = millis() + after;
 }
 
 Scene *AirChargerClass::currentScene() {
@@ -108,7 +111,7 @@ void AirChargerClass::_updateConnection() {
 void AirChargerClass::onBLEStateChanged() {
   _updateScene(true);
   if (BLEPeripheral.state() == BLEPeripheralState::PAIRED) {
-    reboot(5 * 1000);
+    reboot(RebootReason::PAIRED, 5000);
   }
 }
 
@@ -116,8 +119,7 @@ void AirChargerClass::onRemoteDeviceConnect() {
 }
 
 void AirChargerClass::onRemoteDeviceDisconnect() {
-  Screen.showMessage("Disconnected.");
-  reboot(500);
+  reboot(RebootReason::REMOTE_DEVICE_DISCONNECT);
 }
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {
