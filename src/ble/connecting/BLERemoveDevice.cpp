@@ -31,7 +31,7 @@ void BLERemoteDevice::batteryLevel(uint8_t batteryLevel) {
     if (_callbacks) {
       _callbacks->onBatteryLevelChanged();
     }
-    LOG_D("Battery level is now %d.", _batteryLevel);
+    LOG_D("Battery level is now %d%%.", _batteryLevel);
   }
 }
 
