@@ -29,4 +29,9 @@ private:
   bool _isCharging = false;
 
   TFTDrawingContext *_drawingContext = nullptr;
+
+  void _drawHead();
+  void _drawOutline();
+  void _drawBody();
+  void _drawPercentage();
 };
