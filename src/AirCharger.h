@@ -33,7 +33,7 @@ private:
   ConnectScene *_connectScene = nullptr;
   MainScene *_mainScene = nullptr;
 
-  void _updateScene(bool forceUpdate = false);
+  void _updateScene(bool forceRedraw = false);
   void _updateConnection();
 };
 
