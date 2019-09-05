@@ -52,6 +52,10 @@ void Settings::save() {
   LOG_D("[EEPROM] has been <SAVED>.");
 }
 
+void Settings::erase() {
+  EEPROM.write(0, 0);
+}
+
 void Settings::_touch() {
   EEPROM.write(0, PAIRED_FLAG);
 }

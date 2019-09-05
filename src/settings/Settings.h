@@ -14,6 +14,7 @@ public:
   void clientAddress(ble_address_t value);
 
   void save();
+  void erase();
 
 private:
   bool _hasClientAddress = false;
