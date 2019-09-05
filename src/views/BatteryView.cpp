@@ -36,6 +36,7 @@ void BatteryView::draw() {
     _drawingContext->alloc();
   }
   if (hasChanged()) {
+    LOG_D("Drawing BatteryView %d%%", _batteryLevel);
     _drawingContext->fill(TFT_BLACK);
     _drawingContext->drawRoundRect(Rect(0, 0, size().width - BATTERY_HEAD_WIDTH - 3, size().height),
                                    BATTERY_HEAD_WIDTH, TFT_WHITE);
@@ -66,7 +67,6 @@ void BatteryView::draw() {
     _drawingContext->drawString(
         formatPercentage(_batteryLevel),
         Point((size().width - BATTERY_HEAD_WIDTH - 3) / 2, size().height / 2));
-    LOG_I("Drawing BatteryView %d%%", _batteryLevel);
   }
   _drawingContext->push(frame().origin());
 }
