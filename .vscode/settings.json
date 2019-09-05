@@ -17,5 +17,6 @@
     "tuple": "cpp",
     "type_traits": "cpp",
     "utility": "cpp"
-  }
+  },
+  "editor.formatOnSave": true
 }
