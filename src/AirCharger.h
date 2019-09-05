@@ -2,8 +2,6 @@
 
 #include <Arduino.h>
 
-#include <TFT_eSPI.h>
-
 #include "ble/BLEPeripheral.h"
 #include "charging/Charger.h"
 #include "displaying/Screen.h"
