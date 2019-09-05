@@ -2,22 +2,29 @@
 
 #include <EEPROM.h>
 
-#include "log.h"
 #include "../utils/format.h"
+#include "log.h"
 
 void Settings::begin() {
   LOG_I("Loading settings from EEPROM...");
   EEPROM.begin(7);
   LOG_D("Reading previous settings from EEPROM...");
   if (EEPROM.read(0)) {
-    _hasClientAddress = true;
+    bool _clientAddressAvailable = false;
     for (int i = 0; i < 6; i++) {
       _clientAddress[i] = EEPROM.read(i + 1);
+      if (_clientAddress[i] != 255 && _clientAddress != 0) {
+        _clientAddressAvailable = true;
+      }
     }
+    if (_clientAddressAvailable) {
+      _hasClientAddress = true;
+    }
+  }
+  if (_hasClientAddress) {
     LOG_D("Saved client address was found: [%s]", formatBLEAddress(_clientAddress).c_str());
   } else {
     LOG_D("No previous setting wa found in EEPROM.");
-    _hasClientAddress = false;
   }
 }
 
