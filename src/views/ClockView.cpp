@@ -22,13 +22,13 @@ void ClockView::draw() {
     _drawingContext->alloc();
   }
   if (hasChanged()) {
+    LOG_D("Drawing ClockView %s", _timeString.c_str());
     _drawingContext->fill(TFT_BLACK);
     _drawingContext->setTextColor(TFT_WHITE);
     _drawingContext->setFont(7);
     _drawingContext->setFontSize(1);
     _drawingContext->setTextAlign(CC_DATUM);
     _drawingContext->drawString(_timeString, bounds().middlePoint());
-    LOG_I("Drawing ClockView %s", _timeString.c_str());
   }
   _drawingContext->push(frame().origin());
 }
