@@ -17,6 +17,7 @@ MainScene::MainScene() : Scene() {
 
 void MainScene::update() {
   _clockView.update();
+
   _batteryView.update();
   _batteryView.batteryLevel(BLEPeripheral.remoteDevice()->batteryLevel());
   _batteryView.isCharging(Charger.isCharging());
