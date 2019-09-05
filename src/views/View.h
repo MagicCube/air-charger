@@ -12,6 +12,7 @@ public:
   Rect bounds();
   Size size();
 
+  void update();
   void redraw(bool force = false);
 
 protected:

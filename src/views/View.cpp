@@ -42,5 +42,9 @@ void View::redraw(bool force) {
   _hasChanged = false;
 }
 
+void View::update() {
+
+}
+
 void View::draw() {
 }
