@@ -14,7 +14,7 @@ void Settings::begin() {
 
   if (EEPROM.read(0) == PAIRED_FLAG) {
     bool _clientAddressAvailable = false;
-    for (int i = 0; i < 6; i++) {
+    for (uint8_t i = 0; i < 6; i++) {
       _clientAddress[i] = EEPROM.read(i + 2);
       if (_clientAddress[i] != 255 && _clientAddress != 0) {
         _clientAddressAvailable = true;
@@ -45,7 +45,6 @@ RebootReason Settings::rebootReason() {
 void Settings::rebootReason(RebootReason reason) {
   LOG_D("[EEPROM] sets reboot reason.");
   _rebootReason = reason;
-  _touch();
   EEPROM.write(1, (uint8_t)_rebootReason);
 }
 
@@ -60,7 +59,7 @@ ble_address_t Settings::clientAddress() {
 void Settings::clientAddress(ble_address_t value) {
   LOG_D("[EEPROM] sets client address.");
   _touch();
-  for (int i = 0; i < 6; i++) {
+  for (uint8_t i = 0; i < 6; i++) {
     EEPROM.write(i + 2, value[i]);
   }
   _hasClientAddress = true;
@@ -73,6 +72,9 @@ void Settings::save() {
 
 void Settings::erase() {
   EEPROM.write(0, 0);
+  for (uint8_t i = 0; i < 6; i++) {
+    EEPROM.write(i + 2, 0);
+  }
 }
 
 void Settings::_touch() {
