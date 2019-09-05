@@ -8,15 +8,14 @@ String formatPercentage(int percentage) {
 
 String formatTime(DateTime dateTime, bool includingSeconds) {
   char result[10];
-  auto *format = includingSeconds ? "%02d:%02d:%02d" : "%02d : %02d";
+  auto *format = includingSeconds ? "%02d:%02d:%02d" : "%02d:%02d";
   sprintf(result, format, dateTime.hours(), dateTime.minutes(), dateTime.seconds());
   return String(result);
 }
 
 String formatDate(DateTime dateTime) {
   char result[12];
-  sprintf(result, "%d-%02d-%02d", dateTime.fullYear(), dateTime.month() + 1,
-          dateTime.date());
+  sprintf(result, "%d-%02d-%02d", dateTime.fullYear(), dateTime.month() + 1, dateTime.date());
   return String(result);
 }
 
