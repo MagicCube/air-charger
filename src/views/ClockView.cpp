@@ -1,5 +1,7 @@
 #include "ClockView.h"
 
+#include "log.h"
+
 ClockView::ClockView() : View(Rect((TFT_WIDTH - CLOCK_WIDTH) / 2, 42, CLOCK_WIDTH, CLOCK_HEIGHT)) {
 }
 
@@ -16,7 +18,7 @@ void ClockView::timeString(String value) {
 
 void ClockView::draw() {
   if (_drawingContext == nullptr) {
-    _drawingContext = createDrawingContext(1);
+    _drawingContext = TFTDrawingContext::createDrawingContext(size(), 1);
     _drawingContext->alloc();
   }
   if (hasChanged()) {
@@ -26,6 +28,7 @@ void ClockView::draw() {
     _drawingContext->setFontSize(1);
     _drawingContext->setTextAlign(CC_DATUM);
     _drawingContext->drawString(_timeString, bounds().middlePoint());
+    LOG_I("Drawing ClockView %s", _timeString.c_str());
   }
   _drawingContext->push(frame().origin());
 }

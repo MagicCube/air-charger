@@ -2,6 +2,8 @@
 
 #define TFT_GREY 0x4208
 
+#include "log.h"
+
 #include "../utils/format.h"
 
 BatteryView::BatteryView()
@@ -30,7 +32,7 @@ void BatteryView::isCharging(bool value) {
 
 void BatteryView::draw() {
   if (_drawingContext == nullptr) {
-    _drawingContext = createDrawingContext(8);
+    _drawingContext = TFTDrawingContext::createDrawingContext(size(), 8);
     _drawingContext->alloc();
   }
   if (hasChanged()) {
@@ -64,6 +66,7 @@ void BatteryView::draw() {
     _drawingContext->drawString(
         formatPercentage(_batteryLevel),
         Point((size().width - BATTERY_HEAD_WIDTH - 3) / 2, size().height / 2));
+    LOG_I("Drawing BatteryView %d%%", _batteryLevel);
   }
   _drawingContext->push(frame().origin());
 }
