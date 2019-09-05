@@ -5,7 +5,6 @@
 #include "../ble/BLEPeripheral.h"
 #include "../charging/Charger.h"
 #include "../drawing/tft/TFTDrawingContext.h"
-#include "../utils/format.h"
 
 #include "../resources/charging_indicator.h"
 
@@ -17,11 +16,8 @@ MainScene::MainScene() : Scene() {
 }
 
 void MainScene::update() {
-  auto now = DateTime::now();
-  DateTime time(now);
-  if (now > 1000 * 60 * 60) {
-    _clockView.timeString(formatTime(time, false));
-  }
+  _clockView.update();
+  _batteryView.update();
   _batteryView.batteryLevel(BLEPeripheral.remoteDevice()->batteryLevel());
   _batteryView.isCharging(Charger.isCharging());
 

@@ -2,6 +2,8 @@
 
 #include "log.h"
 
+#include "../utils/format.h"
+
 ClockView::ClockView() : View(Rect((TFT_WIDTH - CLOCK_WIDTH) / 2, 42, CLOCK_WIDTH, CLOCK_HEIGHT)) {
 }
 
@@ -13,6 +15,14 @@ void ClockView::timeString(String value) {
   if (!value.equals(_timeString)) {
     _timeString = value;
     markAsChanged();
+  }
+}
+
+void ClockView::update() {
+  auto now = DateTime::now();
+  DateTime time(now);
+  if (now > 1000 * 60 * 60) {
+    timeString(formatTime(time, false));
   }
 }
 

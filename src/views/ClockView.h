@@ -16,6 +16,8 @@ public:
   String timeString();
   void timeString(String value);
 
+  void update();
+
 protected:
   void draw();
 
