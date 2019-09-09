@@ -19,7 +19,8 @@ void AirChargerClass::begin(String deviceName) {
   BLEPeripheral.setCallbacks(this);
   BLEPeripheral.begin(deviceName);
 
-  if (AirChargerSettings.hasClientAddress()) {
+  if (AirChargerSettings.rebootReason() != AirChargerRebootReason::REPAIR &&
+      AirChargerSettings.hasClientAddress()) {
     BLEPeripheral.startScanningMode(AirChargerSettings.clientAddress());
   } else {
     BLEPeripheral.startPairingMode();
@@ -105,8 +106,14 @@ void AirChargerClass::_updateConnection() {
     BLEPeripheral.connectRemoteDevice(AirChargerSettings.clientAddress());
   } else if (BLEPeripheral.state() == BLEPeripheralState::SCANNING) {
     if (AirChargerSettings.rebootReason() == AirChargerRebootReason::UNKNOWN) {
-      // LOG_D("Device has not been discovered in the first 3 seconds.");
-      // LOG_D("Starting pairing server...");
+      if (_suspectNotFound == 0) {
+        _suspectNotFound = millis();
+        LOG_D("Fail to find device in the very first 3 seconds.");
+      }
+      if (millis() - _suspectNotFound > 1000 * 7) {
+        AirChargerSettings.erase();
+        reboot(AirChargerRebootReason::REPAIR);
+      }
     }
     BLEPeripheral.continueSearching();
   }

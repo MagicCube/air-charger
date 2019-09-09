@@ -32,6 +32,7 @@ public:
 private:
   unsigned long _lastUpdate = 0;
   unsigned long _readyToReboot = 0;
+  unsigned long _suspectNotFound = 0;
 
   Scene *_currentScene = nullptr;
   ConnectScene *_connectScene = nullptr;
