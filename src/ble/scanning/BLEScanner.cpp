@@ -26,7 +26,7 @@ void BLEScanner::startScanning() {
   LOG_I("Scanning has been <STARTED>.");
   scan->start(3, false);
   if (_foundDevice) {
-    LOG_D("<I'M FEELING GOOD> Found device in less than 3 seconds.");
+    LOG_D(">>> I'M FEELING GOOD <<< Found device in less than 3 seconds");
   }
 }
 
