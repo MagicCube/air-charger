@@ -5,7 +5,7 @@
 #include "../utils/format.h"
 #include "log.h"
 
-#define PAIRED_FLAG 1
+#define PAIRED_FLAG 200
 
 void Settings::begin() {
   LOG_I("Loading settings from EEPROM...");
