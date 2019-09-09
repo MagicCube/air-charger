@@ -23,6 +23,7 @@ void BLEScanner::startScanning() {
   scan->setInterval(100);
   scan->setWindow(99);
   scan->setActiveScan(true);
+  scan->start(1, true);
   LOG_I("Scanning has been <STARTED>.");
 }
 
