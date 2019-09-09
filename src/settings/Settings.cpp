@@ -7,7 +7,7 @@
 
 #define PAIRED_FLAG 200
 
-void Settings::begin() {
+void AirChargerSettingsClass::begin() {
   LOG_I("Loading settings from EEPROM...");
   EEPROM.begin(8);
   LOG_D("Reading previous settings from EEPROM...");
@@ -39,24 +39,24 @@ void Settings::begin() {
   }
 }
 
-RebootReason Settings::rebootReason() {
+RebootReason AirChargerSettingsClass::rebootReason() {
   return _rebootReason;
 }
-void Settings::rebootReason(RebootReason reason) {
+void AirChargerSettingsClass::rebootReason(RebootReason reason) {
   LOG_D("[EEPROM] sets reboot reason.");
   _rebootReason = reason;
   EEPROM.write(1, (uint8_t)_rebootReason);
 }
 
-bool Settings::hasClientAddress() {
+bool AirChargerSettingsClass::hasClientAddress() {
   return _hasClientAddress;
 }
 
-ble_address_t Settings::clientAddress() {
+ble_address_t AirChargerSettingsClass::clientAddress() {
   return _clientAddress;
 }
 
-void Settings::clientAddress(ble_address_t value) {
+void AirChargerSettingsClass::clientAddress(ble_address_t value) {
   LOG_D("[EEPROM] sets client address.");
   _touch();
   for (uint8_t i = 0; i < 6; i++) {
@@ -65,20 +65,20 @@ void Settings::clientAddress(ble_address_t value) {
   _hasClientAddress = true;
 }
 
-void Settings::save() {
+void AirChargerSettingsClass::save() {
   EEPROM.commit();
   LOG_D("[EEPROM] has been <SAVED>.");
 }
 
-void Settings::erase() {
+void AirChargerSettingsClass::erase() {
   EEPROM.write(0, 0);
   for (uint8_t i = 0; i < 6; i++) {
     EEPROM.write(i + 2, 0);
   }
 }
 
-void Settings::_touch() {
+void AirChargerSettingsClass::_touch() {
   EEPROM.write(0, PAIRED_FLAG);
 }
 
-Settings AirChargerSettings;
+AirChargerSettingsClass AirChargerSettings;

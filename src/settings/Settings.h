@@ -6,9 +6,9 @@
 
 enum class RebootReason { UNKNOWN = 1, REPAIR = 10, PAIRED = 11, REMOTE_DEVICE_DISCONNECT = 20 };
 
-class Settings {
+class AirChargerSettingsClass {
 public:
-  // Initializes `AirChargerSettings`.
+  // Initializes `AirChargerSettingsClass`.
   void begin();
 
   RebootReason rebootReason();
@@ -29,4 +29,4 @@ private:
   void _touch();
 };
 
-extern Settings AirChargerSettings;
+extern AirChargerSettingsClass AirChargerSettings;
