@@ -39,8 +39,8 @@ void BLEScanner::stopScanning() {
 }
 
 void BLEScanner::onResult(BLEAdvertisedDevice device) {
-  LOG_I("BLE Advertised Device found: %s, RSSI = %d", device.getAddress().toString().c_str(),
-        device.getRSSI());
+  // LOG_D("BLE Advertised Device found: %s, RSSI = %d", device.getAddress().toString().c_str(),
+  //       device.getRSSI());
   if (device.getAddress().equals(_searchingAddress)) {
     stopScanning();
     _foundDevice = &device;
