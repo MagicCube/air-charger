@@ -104,6 +104,10 @@ void AirChargerClass::_updateConnection() {
   if (BLEPeripheral.state() == BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT) {
     BLEPeripheral.connectRemoteDevice(AirChargerSettings.clientAddress());
   } else if (BLEPeripheral.state() == BLEPeripheralState::SCANNING) {
+    if (AirChargerSettings.rebootReason() == RebootReason::UNKNOWN) {
+      // LOG_D("Device has not been discovered in the first 3 seconds.");
+      // LOG_D("Starting pairing server...");
+    }
     BLEPeripheral.continueSearching();
   }
 }
