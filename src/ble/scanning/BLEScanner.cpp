@@ -23,8 +23,11 @@ void BLEScanner::startScanning() {
   scan->setInterval(100);
   scan->setWindow(99);
   scan->setActiveScan(true);
-  scan->start(1, true);
   LOG_I("Scanning has been <STARTED>.");
+  scan->start(3, false);
+  if (_foundDevice) {
+    LOG_D("<I'M FEELING GOOD> Found device in less than 3 seconds.");
+  }
 }
 
 BLEAdvertisedDevice *BLEScanner::continueSearching() {
