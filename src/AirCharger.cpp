@@ -12,7 +12,7 @@ void AirChargerClass::begin(String deviceName) {
   AirChargerSettings.begin();
 
   Screen.begin();
-  if (AirChargerSettings.rebootReason() == RebootReason::UNKNOWN) {
+  if (AirChargerSettings.rebootReason() == AirChargerRebootReason::UNKNOWN) {
     Screen.showSplash();
   }
 
@@ -43,7 +43,7 @@ uint16_t AirChargerClass::update() {
   return timeBudget;
 }
 
-void AirChargerClass::reboot(RebootReason reason, uint16_t after) {
+void AirChargerClass::reboot(AirChargerRebootReason reason, uint16_t after) {
   AirChargerSettings.rebootReason(reason);
   AirChargerSettings.save();
   _readyToReboot = millis() + after;
@@ -104,7 +104,7 @@ void AirChargerClass::_updateConnection() {
   if (BLEPeripheral.state() == BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT) {
     BLEPeripheral.connectRemoteDevice(AirChargerSettings.clientAddress());
   } else if (BLEPeripheral.state() == BLEPeripheralState::SCANNING) {
-    if (AirChargerSettings.rebootReason() == RebootReason::UNKNOWN) {
+    if (AirChargerSettings.rebootReason() == AirChargerRebootReason::UNKNOWN) {
       // LOG_D("Device has not been discovered in the first 3 seconds.");
       // LOG_D("Starting pairing server...");
     }
@@ -115,7 +115,7 @@ void AirChargerClass::_updateConnection() {
 void AirChargerClass::onBLEStateChanged() {
   _updateScene(true);
   if (BLEPeripheral.state() == BLEPeripheralState::PAIRED) {
-    reboot(RebootReason::PAIRED, 5000);
+    reboot(AirChargerRebootReason::PAIRED, 5000);
   }
 }
 
@@ -123,7 +123,7 @@ void AirChargerClass::onRemoteDeviceConnect() {
 }
 
 void AirChargerClass::onRemoteDeviceDisconnect() {
-  reboot(RebootReason::REMOTE_DEVICE_DISCONNECT);
+  reboot(AirChargerRebootReason::REMOTE_DEVICE_DISCONNECT);
 }
 
 void AirChargerClass::onRemoteDeviceBatteryLevelChanged() {

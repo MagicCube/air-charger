@@ -17,7 +17,7 @@ public:
   void begin(String deviceName);
 
   uint16_t update();
-  void reboot(RebootReason reason, uint16_t after = 0);
+  void reboot(AirChargerRebootReason reason, uint16_t after = 0);
 
   Scene *currentScene();
   void currentScene(Scene *scene);

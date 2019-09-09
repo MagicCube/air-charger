@@ -33,16 +33,16 @@ void AirChargerSettingsClass::begin() {
   uint8_t byte = EEPROM.read(1);
   LOG_D("Reboot reason: %d", byte);
   if (byte == 1 || byte == 10 || byte == 11 || byte == 20) {
-    _rebootReason = (RebootReason)byte;
+    _rebootReason = (AirChargerRebootReason)byte;
     EEPROM.write(1, 0);
     EEPROM.commit();
   }
 }
 
-RebootReason AirChargerSettingsClass::rebootReason() {
+AirChargerRebootReason AirChargerSettingsClass::rebootReason() {
   return _rebootReason;
 }
-void AirChargerSettingsClass::rebootReason(RebootReason reason) {
+void AirChargerSettingsClass::rebootReason(AirChargerRebootReason reason) {
   LOG_D("[EEPROM] sets reboot reason.");
   _rebootReason = reason;
   EEPROM.write(1, (uint8_t)_rebootReason);
