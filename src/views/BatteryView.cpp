@@ -61,7 +61,7 @@ void BatteryView::_drawOutline() {
 void BatteryView::_drawBody() {
   int batteryWidth = ((float)(size().width - BATTERY_HEAD_WIDTH - BATTERY_PADDING * 2 - 3));
   int innerBatteryWidth = batteryWidth * ((float)_batteryLevel / 100);
-  auto batteryColor = _isCharging ? TFT_DARKGREEN : TFT_GREY;
+  auto batteryColor = TFT_DARKGREEN;
   if (_batteryLevel <= 10) {
     batteryColor = TFT_RED;
   } else if (_batteryLevel <= 20) {
