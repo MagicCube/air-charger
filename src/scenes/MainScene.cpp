@@ -33,7 +33,7 @@ void MainScene::draw() {
   _clockView.redraw(true);   // Always force to redraw
   _batteryView.redraw(true); // Always force to redraw
 
-  _drawChargingIndicator();
+  // _drawChargingIndicator();
 
   Screen.drawConstructionLines();
 }
