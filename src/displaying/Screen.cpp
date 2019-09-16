@@ -14,7 +14,7 @@ ScreenClass *ScreenClass::instance() {
 
 void ScreenClass::begin() {
   _tft.init();
-  _tft.setRotation(1);
+  _tft.setRotation(2);
 }
 
 Rect ScreenClass::bounds() {
