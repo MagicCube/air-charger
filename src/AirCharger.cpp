@@ -103,6 +103,7 @@ void AirChargerClass::_updateScene(bool forceRedraw) {
 
 void AirChargerClass::_updateConnection() {
   if (BLEPeripheral.state() == BLEPeripheralState::REMOTE_DEVICE_READY_TO_CONNECT) {
+    delay(1000);
     BLEPeripheral.connectRemoteDevice(AirChargerSettings.clientAddress());
   } else if (BLEPeripheral.state() == BLEPeripheralState::SCANNING) {
     if (AirChargerSettings.rebootReason() == AirChargerRebootReason::UNKNOWN) {
